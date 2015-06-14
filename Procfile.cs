@@ -1,0 +1,1 @@
+﻿web: mono bin/Debug/ht-azetquizoid.exe
