@@ -1,0 +1,22 @@
+{
+  "name": "ht-azetquizoid",
+  "version": "1.0.0",
+  "description": "hackathon azetquizoid",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fireantik/ht-azetquizoid.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fireantik/ht-azetquizoid/issues"
+  },
+  "homepage": "https://github.com/fireantik/ht-azetquizoid#readme",
+  "dependencies": {
+    "express": "^4.12.4"
+  }
+}
