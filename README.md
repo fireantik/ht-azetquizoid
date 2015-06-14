@@ -1,8 +1,7 @@
 #Azetquizoid
 http://azetquizoid.azurewebsites.net/
 
-ws echo @ /echo
-ws game @ /game
+ws protocol @ /game
 
 client -> server
 ----------------
