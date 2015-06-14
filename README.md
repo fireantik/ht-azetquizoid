@@ -2,19 +2,21 @@
 http://azetquizoid.azurewebsites.net/
 
 Pořadí příkazů
-Klient A 					| Klient B
-:--------					| --------:
-create -> 					| 
- 							| <- connect
-connect-confirm <- 			| -> connect-confirm
-status-report <- 			| -> status-report
-question <- 				| -> question
-answer -> 					|
-answer-report <- //špatně 	|
- 							| <- answer
-							| -> answer-report //správně
-status-report <- 			| -> status-report
-question <- 				| -> question
+
+```
+create ->			|
+					| <- connect
+connect-confirm <-	| -> connect-confirm
+status-report <-	| -> status-report
+question <-			| -> question
+answer ->			|
+answer-report <-	| // špatná odpověď
+					| <- answer
+					| -> answer-report //správná odpověď
+status-report <-	| -> status-report
+question <-			| -> question
+...
+```
 
 ws protocol @ /game
 
