@@ -5,17 +5,21 @@ Pořadí příkazů
 
 ```
 create ->			|
+create-confirm <-	|
 					| <- connect
 connect-confirm <-	| -> connect-confirm
 status-report <-	| -> status-report
 question <-			| -> question
 answer ->			|
-answer-report <-	| // špatná odpověď
 					| <- answer
-					| -> answer-report //správná odpověď
+answer-report <-	| -> answer-report
+					| <- select
 status-report <-	| -> status-report
 question <-			| -> question
 ...
+guess ->			|
+guess-response <-	|
+status-report <-	| -> status-report
 ```
 
 ws protocol @ /game
@@ -41,7 +45,7 @@ připoj se ke hře
 }
 ```
 
-odpověz na otázku
+odpověz na otázku //TODO
 ```js
 {
     "type":"answer",
@@ -56,6 +60,27 @@ získej status o aktuální hře
 {
     "type":"status",
     "data":{}
+}
+```
+
+zvolit pole pro odkrytí //TODO
+```js
+{
+    "type":"select",
+    "data":{
+		"x":0,
+		"y":0
+	}
+}
+```
+
+hádej //TODO
+```js
+{
+    "type":"guess",
+    "data":{
+		"text":"' // co je na obrázku?
+	}
 }
 ```
 
@@ -89,7 +114,8 @@ connect confirmace (dostanou jí oba hráči //TODO)
     "data":{
         "id":"",
         "img-url":"" //TODO,
-        "options":["",""] //možnosti pro pool odpovědí //TODO
+        "options":["",""], //možnosti pro pool odpovědí //TODO
+		"size": {"x":0,"y":0} //počet polí //TODO
     }
 }
 ```
@@ -99,7 +125,9 @@ nová otázka //TODO
 {
     "type":"question",
     "data":{
-        "text":""
+        "text":"",
+		"timestamp":0,
+		"answer-time":0 // čas na odpověď
     }
 }
 ```
@@ -114,12 +142,25 @@ info o odpovědi //TODO
 }
 ```
 
-status response (info o hře)
+guess response /TODO
+```js
+{
+    "type":"guess-rsponse",
+    "data":{
+        "correct":true|false
+    }
+}
+```
+
+status response (info o hře) /TODO
 ```js
 {
     "type":"status-report",
     "data":{
-        status data
+        player1score:0,
+        player2score:0,
+		"options":["",""], //zbyvajici moznosti
+		"state":"running|done" //hra běží nebo je dohraná.
     }
 }
 ```
