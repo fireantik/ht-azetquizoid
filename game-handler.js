@@ -8,11 +8,20 @@ function Game(ws) {
     this.id = makeId();
 }
 
+function makeId() {
+    return "4";
+}
+
 Game.prototype.serialize = function () {
     return {
         state: this.state,
         id: this.id
     }
+}
+
+Game.prototype.start = function (ws2) {
+    this.client2 = ws2;
+    this.state = "active";
 }
 
 Game.prototype.message = function (type, data, ws) {
@@ -25,13 +34,5 @@ Game.prototype.message_status = function (data, ws) {
     ws.send(helpers.message("status-report", this.serialize()));
 }
 
-Game.prototype.start = function (ws2) {
-    this.client2 = ws2;
-    this.state = "active";
-}
-
-function makeId() {
-    return "4";
-}
 
 module.exports = Game;

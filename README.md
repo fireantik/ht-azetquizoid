@@ -1,12 +1,27 @@
 #Azetquizoid
 http://azetquizoid.azurewebsites.net/
 
+Pořadí příkazů
+Klient A 					| Klient B
+:--------					| --------:
+create -> 					| 
+ 							| <- connect
+connect-confirm <- 			| -> connect-confirm
+status-report <- 			| -> status-report
+question <- 				| -> question
+answer -> 					|
+answer-report <- //špatně 	|
+ 							| <- answer
+							| -> answer-report //správně
+status-report <- 			| -> status-report
+question <- 				| -> question
+
 ws protocol @ /game
 
 client -> server
 ----------------
 
-create game
+vytvoř hru
 ```js
 {
     "type":"create",
@@ -14,7 +29,7 @@ create game
 }
 ```
 
-connect to game
+připoj se ke hře
 ```js
 {
     "type":"connect",
@@ -24,7 +39,17 @@ connect to game
 }
 ```
 
-get status about current game
+odpověz na otázku
+```js
+{
+    "type":"answer",
+    "data":{
+        "text":""
+    }
+}
+```
+
+získej status o aktuální hře
 ```js
 {
     "type":"status",
@@ -45,7 +70,7 @@ error
 }
 ```
 
-create confirmation
+create confirmace
 ```js
 {
     "type":"create-confirm",
@@ -55,17 +80,39 @@ create confirmation
 }
 ```
 
-connect confirmation
+connect confirmace (dostanou jí oba hráči //TODO)
 ```js
 {
     "type":"connect-confirm",
     "data":{
-        "id":""
+        "id":"",
+        "img-url":"" //TODO,
+        "options":["",""] //možnosti pro pool odpovědí //TODO
     }
 }
 ```
 
-status response (debugging only)
+nová otázka //TODO
+```js
+{
+    "type":"question",
+    "data":{
+        "text":""
+    }
+}
+```
+
+info o odpovědi //TODO
+```js
+{
+    "type":"answer-report",
+    "data":{
+        "correct":true|false //byla správná
+    }
+}
+```
+
+status response (info o hře)
 ```js
 {
     "type":"status-report",
