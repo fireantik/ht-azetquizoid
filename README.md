@@ -1,7 +1,7 @@
 #Azetquizoid
 http://azetquizoid.azurewebsites.net/
 
-Hra začne, zobrazí se otázka, oba hráči odpoví. Vyhodnotí se odpovědi, ten co odpověděl správně vybere pole. Když ani jeden neodpověděl správně, tak se vybere náhodné pole. Když oba odpověděli správně, tak vyhrál ten, kdo odpověděl první. Zobrazí se další otázka. Oba hráči mohou kdykoliv hádat obrázek. Po každém hádání se pošle status report. Kdyže state=ended tak hra končí, ten kdo má víc bodů tak vyhrál.
+Hra začne, zobrazí se otázka, oba hráči odpoví. Vyhodnotí se odpovědi, ten co odpověděl správně vybere pole. Když ani jeden neodpověděl správně, tak se vybere náhodné pole. Když oba odpověděli správně, tak vyhrál ten, kdo odpověděl první. Zobrazí se další otázka. Oba hráči mohou kdykoliv hádat obrázek. Po každém hádání se pošle status report. Kdyže state=ended tak hra končí. Ten kdo má víc bodů, vyhrál.
 
 Pořadí příkazů
 
