@@ -1,1 +1,1 @@
-﻿web: mono bin/Debug/ht-azetquizoid.exe
+﻿web: ./mono-build/bin/mono bin/Debug/ht-azetquizoid.exe
