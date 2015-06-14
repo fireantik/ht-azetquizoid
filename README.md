@@ -1,6 +1,8 @@
 #Azetquizoid
 http://azetquizoid.azurewebsites.net/
 
+Hra začne, zobrazí se otázka, oba hráči odpoví. Vyhodnotí se odpovědi, ten co odpověděl správně vybere pole. Když ani jeden neodpověděl správně, tak se vybere náhodné pole. Když oba odpověděli správně, tak vyhrál ten, kdo odpověděl první. Zobrazí se další otázka. Oba hráči mohou kdykoliv hádat obrázek.
+
 Pořadí příkazů
 
 ```
@@ -137,7 +139,8 @@ info o odpovědi //TODO
 {
     "type":"answer-report",
     "data":{
-        "correct":true|false //byla správná
+        "correct":true|false, //byla správná
+		"pick":true|false //vybírá pole
     }
 }
 ```
