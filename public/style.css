@@ -157,6 +157,18 @@ p{
 	width: 350px;
 	float: right;
 	position:relative;
+	z-index: 4;
+}
+.picture .overlay{
+	position: absolute;top: 10px;
+	left: 10px;
+	width: calc(100% - 20px);
+	height: calc(100% - 20px);
+	z-index: 5;
+}
+.picture .overlay div{
+	float: left;
+	background: #ddd;
 }
 .picture img{
 	width: 100%;

@@ -70,7 +70,7 @@ function gameStarted(data)
 	var img = document.createElement("img");
 	img.src = gameData.image.url;
 	document.getElementById("imageContainer").appendChild(img);
-	handleImage();
+	handleOverlay();
 	handleSelect(data);
 
 }
@@ -153,6 +153,27 @@ function handleImage()
 			ic.appendChild(slice);
 		}
 		ic.appendChild(document.createElement("br"));
+	}
+}
+
+function handleOverlay(){
+	var overlay = document.getElementById("overlay");
+	var image = gameData.image;
+	var y_r = 100 / image.y;
+	var x_r = 100 / image.x;
+
+	for(var y = 0; y < image.y; y++)
+	{
+		for(var x = 0; x < image.x; x++)
+		{
+			var tile = document.createElement("div");
+			var style = "height: " + y_r + "%;";
+			style += "width: " + x_r + "%;";
+			tile.setAttribute("style", style);
+			console.log(style);
+			overlay.appendChild(tile);
+		}
+		overlay.appendChild(document.createElement("br"));
 	}
 }
 
