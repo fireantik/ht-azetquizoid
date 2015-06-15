@@ -77,7 +77,7 @@ zvolit pole pro odkrytí
 }
 ```
 
-hádej //TODO
+hádej
 ```js
 {
     "type":"guess",
@@ -148,7 +148,7 @@ info o odpovědi
 }
 ```
 
-guess response //TODO
+guess response
 ```js
 {
     "type":"guess-rsponse",
