@@ -18,6 +18,8 @@
   "homepage": "https://github.com/fireantik/ht-azetquizoid#readme",
   "dependencies": {
     "express": "^4.12.4",
-    "express-ws": "^0.2.6"
+    "express-ws": "^0.2.6",
+    "request": "^2.57.0",
+    "request-image-size": "^1.2.2"
   }
 }
