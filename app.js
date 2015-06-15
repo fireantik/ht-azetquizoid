@@ -77,6 +77,19 @@ app.ws('/game', function (ws, req) {
 			game.message(type, data, ws);
 		}
 	});
+
+	ws.on('close', function () {
+		if (game) {
+			game.close();
+			for (var i in games) {
+				if (games[i].id == game.id) {
+					games.splice(i, 1);
+					console.log("closed game", game.id);
+					break;
+				}
+			}
+		}
+	});
 });
 
 var server = app.listen(port, function () {

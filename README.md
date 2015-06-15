@@ -18,6 +18,7 @@ answer-report <-	| -> answer-report
 					| <- select
 status-report <-	| -> status-report
 question <-			| -> question
+status-report <-	| -> status-report
 ...
 guess ->			|
 guess-response <-	|
@@ -65,7 +66,7 @@ získej status o aktuální hře
 }
 ```
 
-zvolit pole pro odkrytí //TODO
+zvolit pole pro odkrytí
 ```js
 {
     "type":"select",
@@ -166,7 +167,8 @@ status response (info o hře)
         player2score:0,
 		"options":["",""], //zbyvajici moznosti
 		"state":"running|ended", //hra běží nebo je dohraná.
-		"question":""
+		"question":"",
+		"uncovered":[] //dvourozměrné pole s odkrytými bloky [y][x]. true = odkrytý
     }
 }
 ```

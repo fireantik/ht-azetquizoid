@@ -35,6 +35,15 @@ function Game(ws) {
 
 	this.client1_picking = false;
 	this.client2_picking = false;
+
+	this.uncovered = [];
+
+	for (var y = 0; y < this.size.y; y++) {
+		this.uncovered[y] = [];
+		for (var x = 0; x < this.size.x; x++) {
+			this.uncovered[y][x] = false;
+		}
+	}
 }
 
 Game.prototype.serialize = function () {
@@ -42,6 +51,12 @@ Game.prototype.serialize = function () {
 		state: this.state,
 		id: this.id
 	}
+}
+
+Game.prototype.close = function () {
+	if (this.question_timeout) clearTimeout(this.question_timeout);
+	if (this.client1) this.client1.close();
+	if (this.client2) this.client2.close();
 }
 
 Game.prototype.start = function (ws2) {
@@ -86,6 +101,22 @@ Game.prototype.message_answer = function (data, ws) {
 	else this.someone_answered(2, answer);
 }
 
+Game.prototype.message_select = function (data, ws) {
+	if (ws == this.client1 && !this.client1_picking) return;
+	if (ws == this.client2 && !this.client2_picking) return;
+
+	var x = data.x;
+	var y = data.y;
+
+	if (x < 0 || y < 0 || x >= this.size.x || y >= this.size.y) {
+		ws.send(helpers.error("invalid position selected"));
+		return;
+	}
+
+	this.uncoverCell(x, y);
+	this.donePicking();
+}
+
 Game.prototype.someone_answered = function (who, what) {
 	if (who == 1) {
 		this.client1_answer = what;
@@ -115,7 +146,9 @@ Game.prototype.makeStatusReport = function () {
 		player1score: this.client1_score,
 		player2score: this.client2_score,
 		"options": this.options,
-		"state": this.state
+		"state": this.state,
+		"question": this.question,
+		"uncovered": this.uncovered
 	});
 }
 
@@ -140,14 +173,22 @@ Game.prototype.newQuestion = function () {
 }
 
 Game.prototype.uncoverCell = function (x, y) {
-	//TODO
+	console.log("uncovering", x, y);
+	this.uncovered[y][x] = true;
 }
 
 Game.prototype.pickRandomCell = function () {
-	return {
-		x: 0,
-		y: 0
-	}; //TODO
+	while (true) {
+		var x = Math.floor(Math.random() * this.size.x);
+		var y = Math.floor(Math.random() * this.size.y);
+
+		if (this.uncovered[y][x]) continue;
+
+		return {
+			x: x,
+			y: y
+		}
+	}
 }
 
 Game.prototype.questionEnded = function () {
@@ -185,6 +226,13 @@ Game.prototype.questionEnded = function () {
 
 	this.client1.send(helpers.message("answer-report", c1report));
 	this.client2.send(helpers.message("answer-report", c2report));
+
+	if (!c1correct && !c2correct) this.donePicking();
+}
+
+Game.prototype.donePicking = function () {
+	this.broadcast_status_report();
+	this.newQuestion();
 }
 
 function makeId() {
