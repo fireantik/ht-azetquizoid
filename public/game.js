@@ -171,8 +171,7 @@ function handleOverlay(){
 			var style = "height: calc(" + y_r + "% - 10px);";
 			style += "width: calc(" + x_r + "% - 10px);";
 			tile.setAttribute("style", style);
-			tile.innerHTML = i; 
-			console.log(style);
+			tile.innerHTML = i;
 			overlay.appendChild(tile);
 			i++;
 		}
