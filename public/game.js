@@ -10,13 +10,14 @@ var gameData = {
 	gameId: -1
 }
 
-function image(url, width, height, options, size)
+function image(url, width, height, options, x, y)
 {
 	this.url = url; 
 	this.width = width; 
 	this.height = height; 
 	this.options = options; 
-	this.size = size;
+	this.x = x;
+	this.y = y;
 }
 
 function send(type, data) {
@@ -54,11 +55,12 @@ function gameStarted(data)
 	gameData.gameId = data.id;
 	gameData.waiting = false;
 	gameData.running = true;
-	gameData.image = new image(data.img_url, data.img_width, data.img_height, data.options, data.size);
+	gameData.image = new image(data.img_url, data.img_width, data.img_height, data.options, data.size.x, data.size.y);
 	document.getElementById("gameButton").style = "visibility:hidden";
 	var img = document.createElement("img");
 	img.src = gameData.image.url;
 	document.getElementById("imageContainer").appendChild(img);
+	handleImage();
 }
 
 function questionAsked(data)
@@ -79,7 +81,7 @@ function validateAnswer(data)
 function checkAnswer(data)
 {
 	if(data.correct) msgClient("Správná odpověď"); else msgClient("Špatně!!!!");
-	if(data.pick) pickTile();
+	if(data.pick) { msgClient("Vyberte pole"); pickTile(); }
 }
 
 function pickTile()
@@ -112,6 +114,33 @@ function updateGameState(data)
 	{
 		document.getElementById("firstScore").innerHTML = data.player1score;
 		document.getElementById("secondScore").innerHTML = data.player2score;
+	}
+}
+
+function handleImage()
+{
+	var ic = document.getElementById("imageContainer");
+	var image = gameData.image;
+	ic.setAttribute("style", "width:" + image.width + "px; height:" + image.height + "px;");
+
+	var y_r = image.height / image.y;
+	var x_r = image.width / image.x;
+
+	for(var y = 0; y < image.y; y++)
+	{
+		for(var x = 0; x < image.x; x++)
+		{
+			var slice = document.createElement("div");
+			var style = "background-image: url(" + image.url + ");";
+			style += "height: " + y_r + "px;";
+			style += "width: " + x_r + "px;";
+			style += "background-position: -" + (x * x_r) + "px -" + (y * y_r) + "px;";
+			style += "float:left";
+			slice.setAttribute("style", style);
+			console.log(style);
+			ic.appendChild(slice);
+		}
+		ic.appendChild(document.createElement("br"));
 	}
 }
 
