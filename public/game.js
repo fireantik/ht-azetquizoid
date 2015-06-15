@@ -2,8 +2,10 @@ var socket = new WebSocket("ws://azetquizoid.azurewebsites.net/game");
 
 var gameData = {
 	initialized: false,
+	waiting: false,
 	running: false,
 	debugMode: true,
+	image: null,
 	gameId: -1
 }
 
@@ -32,7 +34,11 @@ function parseMsg(event) {
 
 function createGame()
 {
-	if(gameData.initialized) send("create","");
+	if(gameData.initialized && !gameData.waiting) 
+	{
+		send("create", null);
+		gameData.waiting = true;
+	}
 }
 
 function msgClient(data)
@@ -63,13 +69,13 @@ socket.onmessage = function (event) {
 		switch(type)
 		{
 			case "error": console.error(obj.data); break;
-			case "create-confirm": msgClient("Hra byla vytvořena, id: " + data.id); break;
+			case "create-confirm": msgClient("Hra byla vytvořena, id: " + data.id); gameData.waiting = true; gameData.initialized = true; break;
 			case "connect-confirm": msgClient("Klient připojen ke hře " + data.id); gameStarted(data); break;
 			case "question": questionAsked(data); break;
 			case "answer-report": break;
 			case "guess-response" : break;
 			case "status-report": break;
-			default: console.warn("Unexpected message: " + obj)
+			default: console.warn("Unexpected message: " + obj); break;
 		}
 
 }
