@@ -42,7 +42,7 @@ app.ws('/game', function (ws, req) {
 
 		if (game == null) {
 			if (type == "create") {
-				game = new Game(ws);
+				game = new Game(ws, closeGame);
 				games.push(game);
 
 				ws.send(helpers.message("create-confirm", {
@@ -74,22 +74,32 @@ app.ws('/game', function (ws, req) {
 				ws.send(helpers.error("invalid first message. only create/connect are valid"));
 			}
 		} else {
+			//try {
 			game.message(type, data, ws);
+			/*} catch (ex) {
+				console.log(game.id, "error");
+				console.log(ex);
+				game.close();
+			}*/
 		}
 	});
 
 	ws.on('close', function () {
-		if (game) {
-			game.close();
-			for (var i in games) {
-				if (games[i].id == game.id) {
-					games.splice(i, 1);
-					console.log("closed game", game.id);
-					break;
-				}
+		if (game) game.close();
+	});
+
+	function closeGame(gm) {
+		for (var i in games) {
+			if (games[i].id == gm.id) {
+				games.splice(i, 1);
+				console.log("closed game", gm.id);
+				break;
 			}
 		}
-	});
+		game = null;
+		ws.close();
+		console.log("crrently running", games.length, "games");
+	}
 });
 
 var server = app.listen(port, function () {

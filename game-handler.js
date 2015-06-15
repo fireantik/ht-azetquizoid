@@ -4,8 +4,16 @@ var images_file = require('./images_db.json');
 var imageDB = [];
 var imageOptions = [];
 
+var correct_answer_score = 5;
+var wrong_answer_score = 0;
+var first_answer_score = 5;
+var correct_guess_score = 20;
+var wrong_guess_score = -10;
 
-function Game(ws) {
+
+function Game(ws, closeCallback) {
+	this.closeCallback = closeCallback;
+
 	this.client1 = ws;
 	this.client2 = null;
 
@@ -54,9 +62,13 @@ Game.prototype.serialize = function () {
 }
 
 Game.prototype.close = function () {
-	if (this.question_timeout) clearTimeout(this.question_timeout);
+	if (this.state == "closed") return;
+	clearTimeout(this.question_timeout);
 	if (this.client1) this.client1.close();
 	if (this.client2) this.client2.close();
+	this.state = "closed";
+	this.closeCallback(this);
+	console.log("closed", this.id);
 }
 
 Game.prototype.start = function (ws2) {
@@ -83,16 +95,16 @@ Game.prototype.start = function (ws2) {
 Game.prototype.message = function (type, data, ws) {
 	var item = this["message_" + type];
 	if (typeof (item) == "function") item.call(this, data, ws);
-	else ws.send(helpers.error("invalid command"));
+	else this.wsSend(ws, helpers.error("invalid command"));
 }
 
 Game.prototype.message_status = function (data, ws) {
-	ws.send(helpers.message("status-report", this.serialize()));
+	this.wsSend(ws, helpers.message("status-report", this.serialize()));
 }
 
 Game.prototype.message_answer = function (data, ws) {
 	if (!data.text) {
-		ws.send(helpers.error("no answer text supplied"));
+		this.wsSend(ws, helpers.error("no answer text supplied"));
 		return;
 	}
 
@@ -109,12 +121,36 @@ Game.prototype.message_select = function (data, ws) {
 	var y = data.y;
 
 	if (x < 0 || y < 0 || x >= this.size.x || y >= this.size.y) {
-		ws.send(helpers.error("invalid position selected"));
+		this.wsSend(ws, helpers.error("invalid position selected"));
 		return;
 	}
 
 	this.uncoverCell(x, y);
 	this.donePicking();
+}
+
+Game.prototype.message_guess = function (data, ws) {
+	var correct = data.text == this.image.name;
+
+	var response = helpers.message("guess-response", {
+		correct: correct
+	});
+
+	this.wsSend(ws, response);
+
+	if (!correct) {
+		if (ws == this.client1) this.client1_score += wrong_guess_score;
+		else this.client2_score += wrong_guess_score;
+		return;
+	}
+
+	this.state = "ended";
+
+	if (ws == this.client1) this.client1_score += correct_guess_score;
+	else this.client2_score += correct_guess_score;
+
+	this.broadcast_status_report();
+	this.close();
 }
 
 Game.prototype.someone_answered = function (who, what) {
@@ -137,8 +173,8 @@ Game.prototype.broadcast_status_report = function () {
 }
 
 Game.prototype.broadcast = function (message) {
-	this.client1.send(message);
-	this.client2.send(message);
+	this.wsSend(this.client1, message);
+	this.wsSend(this.client2, message);
 }
 
 Game.prototype.makeStatusReport = function () {
@@ -153,6 +189,8 @@ Game.prototype.makeStatusReport = function () {
 }
 
 Game.prototype.newQuestion = function () {
+	if (this.state == "closed") return;
+
 	this.client1_answer = null;
 	this.client1_answer_timestamp = null;
 	this.client2_answer = null;
@@ -161,7 +199,7 @@ Game.prototype.newQuestion = function () {
 	this.question_timestamp = Date.now();
 	var a = this;
 	this.question_timeout = setTimeout(function () {
-		Game.prototype.questionEnded.call(a);
+		if (this.state != "closed") Game.prototype.questionEnded.call(a);
 	}, this.question_answer_time);
 
 	var qmsg = helpers.message("question", {
@@ -224,8 +262,13 @@ Game.prototype.questionEnded = function () {
 		pick: this.client2_picking
 	};
 
-	this.client1.send(helpers.message("answer-report", c1report));
-	this.client2.send(helpers.message("answer-report", c2report));
+	this.client1_score += c1report.correct ? correct_answer_score : wrong_answer_score;
+	this.client1_score += c1report.pick ? first_answer_score : 0;
+	this.client2_score += c2report.correct ? correct_answer_score : wrong_answer_score;
+	this.client2_score += c2report.pick ? first_answer_score : 0;
+
+	this.wsSend(this.client1, helpers.message("answer-report", c1report));
+	this.wsSend(this.client2, helpers.message("answer-report", c2report));
 
 	if (!c1correct && !c2correct) this.donePicking();
 }
@@ -233,6 +276,15 @@ Game.prototype.questionEnded = function () {
 Game.prototype.donePicking = function () {
 	this.broadcast_status_report();
 	this.newQuestion();
+}
+
+Game.prototype.wsSend = function (where, what) {
+	if (this.state == "closed") return;
+	if (!where) {
+		this.close();
+		return;
+	}
+	where.send(what);
 }
 
 function makeId() {

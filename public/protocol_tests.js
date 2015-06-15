@@ -74,5 +74,11 @@
 				});
 			}
 		}
+
+		document.__guess = function (what) {
+			send(client1, "guess", {
+				text: what
+			});
+		}
 	}
 )();
