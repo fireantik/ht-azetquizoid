@@ -109,7 +109,7 @@ create confirmace
 }
 ```
 
-connect confirmace (dostanou jí oba hráči //TODO)
+connect confirmace (dostanou jí oba hráči )
 ```js
 {
     "type":"connect-confirm",
@@ -147,7 +147,7 @@ info o odpovědi //TODO
 }
 ```
 
-guess response /TODO
+guess response //TODO
 ```js
 {
     "type":"guess-rsponse",
@@ -157,7 +157,7 @@ guess response /TODO
 }
 ```
 
-status response (info o hře) /TODO
+status response (info o hře)
 ```js
 {
     "type":"status-report",

@@ -47,6 +47,8 @@ Game.prototype.start = function (ws2) {
 	this.client2.send(conConfirm);
 
 	console.log("game", this.id, "started");
+
+	this.broadcast_status_report();
 }
 
 Game.prototype.message = function (type, data, ws) {
@@ -57,6 +59,21 @@ Game.prototype.message = function (type, data, ws) {
 
 Game.prototype.message_status = function (data, ws) {
 	ws.send(helpers.message("status-report", this.serialize()));
+}
+
+Game.prototype.broadcast_status_report = function () {
+	var report = this.makeStatusReport();
+	this.client1.send(report);
+	this.client2.send(report);
+}
+
+Game.prototype.makeStatusReport = function () {
+	return helpers.message("status-report", {
+		player1score: this.client1_score,
+		player2score: this.client2_score,
+		"options": this.options,
+		"state": this.state
+	});
 }
 
 function makeId() {
@@ -78,7 +95,6 @@ function getRandomOptions(count, included) {
 	});
 	var sliced = opts.slice(0, count - 1);
 	sliced.push(included);
-	console.log(sliced);
 	return sliced;
 }
 
