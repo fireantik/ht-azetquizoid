@@ -49,6 +49,14 @@ function msgClient(data)
 	document.getElementById("notifyBar").innerHTML = data;
 }
 
+function gameCreated(data)
+{
+	msgClient("Hra byla vytvořena, id: " + data.id); 
+	gameData.waiting = true; 
+	gameData.initialized = true;
+	document.getElementById("url").value = "http://azetquizoid.azurewebsites.net/?"+data.id; // Má se spustit okamžitě, když vleze hráč 1 na stránku
+}
+
 function gameStarted(data)
 {
 	msgClient("Klient připojen ke hře " + data.id);
@@ -57,7 +65,6 @@ function gameStarted(data)
 	gameData.running = true;
 	gameData.image = new image(data.img_url, data.img_width, data.img_height, data.options, data.size.x, data.size.y);
 	//document.getElementById("gameButton").style = "visibility:hidden";
-	document.getElementById("url").value = "http://azetquizoid.azurewebsites.net/"+data.id; // Má se spustit okamžitě, když vleze hráč 1 na stránku
 	document.getElementsByTagName('BODY')[0].className='ingame'; // Má se spustit v momentě, kdy se připojí 2. hráč
 	var img = document.createElement("img");
 	img.src = gameData.image.url;
@@ -106,7 +113,7 @@ function gameCheck()
 		}
 		send("connect", params);
 	//viz design preview
-	}
+	}else createGame();
 }
 
 function updateGameState(data)
@@ -159,7 +166,7 @@ socket.onmessage = function (event) {
 		switch(type)
 		{
 			case "error": console.error(obj.data); break;
-			case "create-confirm": msgClient("Hra byla vytvořena, id: " + data.id); gameData.waiting = true; gameData.initialized = true; break;
+			case "create-confirm": gameCreated(data); break;
 			case "connect-confirm": gameStarted(data); break;
 			case "question": questionAsked(data); break;
 			case "answer-report": checkAnswer(data); break;
