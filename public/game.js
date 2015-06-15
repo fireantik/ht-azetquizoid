@@ -6,6 +6,7 @@ var gameData = {
 	running: false,
 	debugMode: true,
 	image: null,
+	timestamp: null,
 	gameId: -1
 }
 
@@ -13,7 +14,7 @@ function image(url, width, height, options, size)
 {
 	this.url = url; 
 	this.width = width; 
-	this.height = heigh; 
+	this.height = height; 
 	this.options = options; 
 	this.size = size;
 }
@@ -50,11 +51,25 @@ function msgClient(data)
 function gameStarted(data)
 {
 	gameData.gameId = data.id;
+	gameData.image = new image(data.img_url, data.img_width, data.img_height, data.options, data.size);
+	document.getElementById("gameButton").style = "visibility:hidden";
+	var img = document.createElement("img");
+	img.src = gameData.image.url;
+	document.getElementById("imageContainer").appendChild(img);
 }
 
 function questionAsked(data)
 {
+		
+}
 
+function validateAnswer(data)
+{
+	var ans = document.getElementById("answer").value;
+	var params = {
+		text:ans
+	}
+	send("answer", params);
 }
 
 function gameCheck()

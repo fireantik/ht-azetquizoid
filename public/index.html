@@ -14,7 +14,13 @@
 		<span style="localScore"></span>
 		<span style="remoteScore"></span>
 	</div>
-	<button onclick="createGame()">Vytvoř hru</button>
+	<div id="questionBox">
+		<div id="imageContainer"></div>
+		<span id="question"></span>
+		<input type="number" id="answer">
+		<button onclick="validateAnswer()">Odpovídám</button>
+	</div>
+	<button onclick="createGame()" id="gameButton">Vytvoř hru</button>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script src="game.js"></script>
 </body>
