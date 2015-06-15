@@ -115,9 +115,9 @@ connect confirmace (dostanou jí oba hráči //TODO)
     "type":"connect-confirm",
     "data":{
         "id":"",
-        "img-url":"", //TODO,
-        "img-width":0, //TODO,
-        "img-height":0, //TODO,
+        "img_url":"", //TODO,
+        "img_width":0, //TODO,
+        "img_height":0, //TODO,
         "options":["",""], //možnosti pro pool odpovědí //TODO
 		"size": {"x":0,"y":0} //počet polí //TODO
     }
@@ -131,7 +131,7 @@ nová otázka //TODO
     "data":{
         "text":"",
 		"timestamp":0,
-		"answer-time":0 // čas na odpověď
+		"answer_time":0 // čas na odpověď
     }
 }
 ```

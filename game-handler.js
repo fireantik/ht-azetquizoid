@@ -11,7 +11,7 @@ function Game(ws) {
 	this.state = "awaiting";
 	this.id = makeId();
 	this.image = imageDB[Math.floor(Math.random() * imageDB.length)];
-	this.options = getRandomOptions();
+	this.options = getRandomOptions(20, this.image.name);
 	this.size = {
 		x: 10,
 		y: 10
@@ -33,6 +33,20 @@ Game.prototype.serialize = function () {
 Game.prototype.start = function (ws2) {
 	this.client2 = ws2;
 	this.state = "active";
+
+	var conConfirm = helpers.message("connect-confirm", {
+		id: this.id,
+		img_url: this.image.url,
+		img_width: this.image.width,
+		img_height: this.image.height,
+		options: this.options,
+		size: this.size
+	});
+
+	this.client1.send(conConfirm);
+	this.client2.send(conConfirm);
+
+	console.log("game", this.id, "started");
 }
 
 Game.prototype.message = function (type, data, ws) {
@@ -55,12 +69,17 @@ function makeId() {
 	return text;
 }
 
-function getRandomOptions(count) {
+function getRandomOptions(count, included) {
 	var opts = imageOptions.slice();
-	opts.sort(function () {
+	opts.filter(function (a) {
+		return a != included;
+	}).sort(function (a) {
 		return 0.5 - Math.random();
 	});
-	return opts.slice(0, 20);
+	var sliced = opts.slice(0, count - 1);
+	sliced.push(included);
+	console.log(sliced);
+	return sliced;
 }
 
 function transformImages() {
