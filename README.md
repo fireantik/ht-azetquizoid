@@ -47,7 +47,7 @@ připoj se ke hře
 }
 ```
 
-odpověz na otázku //TODO
+odpověz na otázku
 ```js
 {
     "type":"answer",
@@ -124,7 +124,7 @@ connect confirmace (dostanou jí oba hráči )
 }
 ```
 
-nová otázka //TODO
+nová otázka
 ```js
 {
     "type":"question",
@@ -136,7 +136,7 @@ nová otázka //TODO
 }
 ```
 
-info o odpovědi //TODO
+info o odpovědi
 ```js
 {
     "type":"answer-report",

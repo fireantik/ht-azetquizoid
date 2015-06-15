@@ -25,8 +25,16 @@ function Game(ws) {
 
 	this.question = null;
 	this.question_timestamp = null;
-	this.question_answer_time = 60000;
+	this.question_answer_time = 5000;
 	this.question_timeout = null;
+
+	this.client1_answer = null;
+	this.client1_answer_timestamp = null;
+	this.client2_answer = null;
+	this.client2_answer_timestamp = null;
+
+	this.client1_picking = false;
+	this.client2_picking = false;
 }
 
 Game.prototype.serialize = function () {
@@ -67,6 +75,31 @@ Game.prototype.message_status = function (data, ws) {
 	ws.send(helpers.message("status-report", this.serialize()));
 }
 
+Game.prototype.message_answer = function (data, ws) {
+	if (!data.text) {
+		ws.send(helpers.error("no answer text supplied"));
+		return;
+	}
+
+	var answer = data.text;
+	if (ws == this.client1) this.someone_answered(1, answer);
+	else this.someone_answered(2, answer);
+}
+
+Game.prototype.someone_answered = function (who, what) {
+	if (who == 1) {
+		this.client1_answer = what;
+		this.client1_answer_timestamp = Date.now();
+	} else {
+		this.client2_answer = what;
+		this.client2_answer_timestamp = Date.now();
+	}
+
+	console.log("client", who, "answered", what);
+
+	if (this.client1_answer && this.client2_answer) this.questionEnded();
+}
+
 Game.prototype.broadcast_status_report = function () {
 	var report = this.makeStatusReport();
 	this.broadcast(report);
@@ -87,9 +120,16 @@ Game.prototype.makeStatusReport = function () {
 }
 
 Game.prototype.newQuestion = function () {
+	this.client1_answer = null;
+	this.client1_answer_timestamp = null;
+	this.client2_answer = null;
+	this.client2_answer_timestamp = null;
 	this.question = questions.generate();
 	this.question_timestamp = Date.now();
-	this.question_timeout = setTimeout(questionEnded, this.question_answer_time);
+	var a = this;
+	this.question_timeout = setTimeout(function () {
+		Game.prototype.questionEnded.call(a);
+	}, this.question_answer_time);
 
 	var qmsg = helpers.message("question", {
 		"text": this.question,
@@ -99,8 +139,52 @@ Game.prototype.newQuestion = function () {
 	this.broadcast(qmsg);
 }
 
-function questionEnded() {
-	console.log("question ended");
+Game.prototype.uncoverCell = function (x, y) {
+	//TODO
+}
+
+Game.prototype.pickRandomCell = function () {
+	return {
+		x: 0,
+		y: 0
+	}; //TODO
+}
+
+Game.prototype.questionEnded = function () {
+	console.log(this.id, "question ended");
+
+	clearTimeout(this.question_timeout);
+	this.question_timeout = null;
+
+	var c1correct = questions.validate(this.question, this.client1_answer);
+	var c2correct = questions.validate(this.question, this.client2_answer);
+
+
+
+	if (!c1correct && !c2correct) {
+		var cell = this.pickRandomCell();
+		this.uncoverCell(cell.x, cell.y);
+	} else if (c1correct && !c2correct) {
+		this.client1_picking = true;
+	} else if (!c1correct && c2correct) {
+		this.client2_picking = true;
+	} else {
+		if (this.client1_answer_timestamp < this.client2_answer_timestamp) this.client1_picking = true;
+		else this.client2_picking = true;
+	}
+
+	var c1report = {
+		correct: c1correct,
+		pick: this.client1_picking
+	};
+
+	var c2report = {
+		correct: c2correct,
+		pick: this.client2_picking
+	};
+
+	this.client1.send(helpers.message("answer-report", c1report));
+	this.client2.send(helpers.message("answer-report", c2report));
 }
 
 function makeId() {

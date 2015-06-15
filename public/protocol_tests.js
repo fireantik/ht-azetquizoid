@@ -42,6 +42,11 @@ client1.socket.onmessage = function (event) {
 		send(client2, "connect", {
 			id: client1.game.id
 		});
+	} else if (type == "question") {
+		client1.game.question = data.text;
+		send(client1, "answer", {
+			text: "4"
+		});
 	}
 }
 
@@ -51,4 +56,10 @@ client2.socket.onmessage = function (event) {
 	var type = obj.type;
 	var data = obj.data;
 	if (type == "error") throw new data.message;
+	else if (type == "question") {
+		client2.game.question = data.text;
+		send(client2, "answer", {
+			text: "6"
+		});
+	}
 }

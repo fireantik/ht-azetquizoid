@@ -1,9 +1,9 @@
 function generate() {
-	return "2 + 5 = ?";
+	return "2 + 5 = ?"; //TODO
 }
 
 function validate(question, answer) {
-	return answer == "7";
+	return answer == "7"; //TODO
 }
 
 module.exports = {
