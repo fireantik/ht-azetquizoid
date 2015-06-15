@@ -162,18 +162,20 @@ function handleOverlay(){
 	var y_r = 100 / image.y;
 	var x_r = 100 / image.x;
 
+	var i = 1;
 	for(var y = 0; y < image.y; y++)
 	{
 		for(var x = 0; x < image.x; x++)
 		{
 			var tile = document.createElement("div");
-			var style = "height: " + y_r + "%;";
-			style += "width: " + x_r + "%;";
+			var style = "height: calc(" + y_r + "% - 10px);";
+			style += "width: calc(" + x_r + "% - 10px);";
 			tile.setAttribute("style", style);
+			tile.innerHTML = i; 
 			console.log(style);
 			overlay.appendChild(tile);
+			i++;
 		}
-		overlay.appendChild(document.createElement("br"));
 	}
 }
 
