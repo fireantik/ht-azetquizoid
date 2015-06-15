@@ -56,7 +56,9 @@ function gameStarted(data)
 	gameData.waiting = false;
 	gameData.running = true;
 	gameData.image = new image(data.img_url, data.img_width, data.img_height, data.options, data.size.x, data.size.y);
-	document.getElementById("gameButton").style = "visibility:hidden";
+	//document.getElementById("gameButton").style = "visibility:hidden";
+	document.getElementById("url").value = "http://azetquizoid.azurewebsites.net/"+data.id; // Má se spustit okamžitě, když vleze hráč 1 na stránku
+	document.getElementsByTagName('BODY')[0].className='ingame'; // Má se spustit v momentě, kdy se připojí 2. hráč
 	var img = document.createElement("img");
 	img.src = gameData.image.url;
 	document.getElementById("imageContainer").appendChild(img);
