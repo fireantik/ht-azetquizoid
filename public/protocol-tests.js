@@ -1,0 +1,1 @@
+var wsUrl = "ws://localhost:3000/game";
