@@ -49,6 +49,14 @@ function msgClient(data)
 	document.getElementById("notifyBar").innerHTML = data;
 }
 
+function gameCreated(data)
+{
+	msgClient("Hra byla vytvořena, id: " + data.id); 
+	gameData.waiting = true; 
+	gameData.initialized = true;
+	document.getElementById("url").value = "http://azetquizoid.azurewebsites.net/?"+data.id;
+}
+
 function gameStarted(data)
 {
 	msgClient("Klient připojen ke hře " + data.id);
@@ -57,12 +65,13 @@ function gameStarted(data)
 	gameData.running = true;
 	gameData.image = new image(data.img_url, data.img_width, data.img_height, data.options, data.size.x, data.size.y);
 	//document.getElementById("gameButton").style = "visibility:hidden";
-	document.getElementById("url").value = "http://azetquizoid.azurewebsites.net/"+data.id; // Má se spustit okamžitě, když vleze hráč 1 na stránku
-	document.getElementsByTagName('BODY')[0].className='ingame'; // Má se spustit v momentě, kdy se připojí 2. hráč
+	document.getElementsByTagName('BODY')[0].className='ingame';
 	var img = document.createElement("img");
 	img.src = gameData.image.url;
 	document.getElementById("imageContainer").appendChild(img);
 	handleImage();
+	handleSelect(data);
+
 }
 
 function questionAsked(data)
@@ -82,7 +91,7 @@ function validateAnswer(data)
 
 function checkAnswer(data)
 {
-	if(data.correct) msgClient("Správná odpověď"); else msgClient("Špatně!!!!");
+	if(data.correct) msgClient("Správná odpověď"); else msgClient("Špatná!!!!");
 	if(data.pick) { msgClient("Vyberte pole"); pickTile(); }
 }
 
@@ -106,7 +115,7 @@ function gameCheck()
 		}
 		send("connect", params);
 	//viz design preview
-	}
+	}else createGame();
 }
 
 function updateGameState(data)
@@ -146,6 +155,17 @@ function handleImage()
 	}
 }
 
+function handleSelect(data)
+{
+	var select = document.getElementById("imageGuess");
+	for(var i = 0; i < data.options.length; i++)
+	{
+		var opt = document.createElement("option");
+		opt.text = data.options[i];
+		select.add(opt);
+	}
+}
+
 socket.onopen = function (event) {
   gameData.initialized = true;
   gameCheck();
@@ -159,7 +179,7 @@ socket.onmessage = function (event) {
 		switch(type)
 		{
 			case "error": console.error(obj.data); break;
-			case "create-confirm": msgClient("Hra byla vytvořena, id: " + data.id); gameData.waiting = true; gameData.initialized = true; break;
+			case "create-confirm": gameCreated(data); break;
 			case "connect-confirm": gameStarted(data); break;
 			case "question": questionAsked(data); break;
 			case "answer-report": checkAnswer(data); break;
