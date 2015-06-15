@@ -36,7 +36,7 @@ function createGame()
 {
 	if(gameData.initialized && !gameData.waiting) 
 	{
-		send("create", null);
+		send("create", {});
 		gameData.waiting = true;
 	}
 }
@@ -60,12 +60,15 @@ function questionAsked(data)
 function gameCheck()
 {
 	gameData.gameId = window.location.search.substring(1);
-	console.log("Attempting to connect (id=" + gameData.gameId +")");
-	var params = {
-		id: gameData.gameId
-	}
-	send("connect", params);
+	if(gameData.gameId != "")
+	{
+		console.log("Attempting to connect (id=" + gameData.gameId +")");
+		var params = {
+			id: gameData.gameId
+		}
+		send("connect", params);
 	//viz design preview
+	}
 }
 
 socket.onopen = function (event) {
