@@ -54,7 +54,8 @@ function gameCreated(data)
 	msgClient("Hra byla vytvořena, id: " + data.id); 
 	gameData.waiting = true; 
 	gameData.initialized = true;
-	document.getElementById("url").value = "http://azetquizoid.azurewebsites.net/?"+data.id; // Má se spustit okamžitě, když vleze hráč 1 na stránku
+	document.getElementById("url").value = "http://azetquizoid.azurewebsites.net/?"+data.id;
+	document.getElementById("url").select();
 }
 
 function gameStarted(data)
@@ -65,7 +66,7 @@ function gameStarted(data)
 	gameData.running = true;
 	gameData.image = new image(data.img_url, data.img_width, data.img_height, data.options, data.size.x, data.size.y);
 	//document.getElementById("gameButton").style = "visibility:hidden";
-	document.getElementsByTagName('BODY')[0].className='ingame'; // Má se spustit v momentě, kdy se připojí 2. hráč
+	document.getElementsByTagName('BODY')[0].className='ingame';
 	var img = document.createElement("img");
 	img.src = gameData.image.url;
 	document.getElementById("imageContainer").appendChild(img);
