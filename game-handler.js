@@ -1,4 +1,5 @@
 var helpers = require('./helpers.js');
+var questions = require('./question-handler.js');
 var images_file = require('./images_db.json');
 var imageDB = [];
 var imageOptions = [];
@@ -16,11 +17,16 @@ function Game(ws) {
 		x: 10,
 		y: 10
 	};
-	this.time_create = new Date().getTime();
+	this.time_create = Date.now();
 	this.time_start = null;
 	this.time_end = null;
 	this.client1_score = 0;
 	this.client2_score = 0;
+
+	this.question = null;
+	this.question_timestamp = null;
+	this.question_answer_time = 60000;
+	this.question_timeout = null;
 }
 
 Game.prototype.serialize = function () {
@@ -43,11 +49,11 @@ Game.prototype.start = function (ws2) {
 		size: this.size
 	});
 
-	this.client1.send(conConfirm);
-	this.client2.send(conConfirm);
+	this.broadcast(conConfirm);
 
 	console.log("game", this.id, "started");
 
+	this.newQuestion();
 	this.broadcast_status_report();
 }
 
@@ -63,8 +69,12 @@ Game.prototype.message_status = function (data, ws) {
 
 Game.prototype.broadcast_status_report = function () {
 	var report = this.makeStatusReport();
-	this.client1.send(report);
-	this.client2.send(report);
+	this.broadcast(report);
+}
+
+Game.prototype.broadcast = function (message) {
+	this.client1.send(message);
+	this.client2.send(message);
 }
 
 Game.prototype.makeStatusReport = function () {
@@ -74,6 +84,23 @@ Game.prototype.makeStatusReport = function () {
 		"options": this.options,
 		"state": this.state
 	});
+}
+
+Game.prototype.newQuestion = function () {
+	this.question = questions.generate();
+	this.question_timestamp = Date.now();
+	this.question_timeout = setTimeout(questionEnded, this.question_answer_time);
+
+	var qmsg = helpers.message("question", {
+		"text": this.question,
+		"timestamp": this.question_timestamp,
+		"answer_time": this.question_answer_time
+	});
+	this.broadcast(qmsg);
+}
+
+function questionEnded() {
+	console.log("question ended");
 }
 
 function makeId() {

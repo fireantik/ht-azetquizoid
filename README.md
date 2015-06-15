@@ -10,8 +10,8 @@ create ->			|
 create-confirm <-	|
 					| <- connect
 connect-confirm <-	| -> connect-confirm
-status-report <-	| -> status-report
 question <-			| -> question
+status-report <-	| -> status-report
 answer ->			|
 					| <- answer
 answer-report <-	| -> answer-report
@@ -131,7 +131,7 @@ nová otázka //TODO
     "data":{
         "text":"",
 		"timestamp":0,
-		"answer_time":0 // čas na odpověď
+		"answer_time":0 // čas na odpověď v MS
     }
 }
 ```
@@ -165,7 +165,8 @@ status response (info o hře)
         player1score:0,
         player2score:0,
 		"options":["",""], //zbyvajici moznosti
-		"state":"running|ended" //hra běží nebo je dohraná.
+		"state":"running|ended", //hra běží nebo je dohraná.
+		"question":""
     }
 }
 ```
