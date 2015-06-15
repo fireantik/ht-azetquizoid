@@ -70,6 +70,8 @@ function gameStarted(data)
 	img.src = gameData.image.url;
 	document.getElementById("imageContainer").appendChild(img);
 	handleImage();
+	handleSelect(data);
+
 }
 
 function questionAsked(data)
@@ -150,6 +152,17 @@ function handleImage()
 			ic.appendChild(slice);
 		}
 		ic.appendChild(document.createElement("br"));
+	}
+}
+
+function handleSelect(data)
+{
+	var select = document.getElementById("imageGuess");
+	for(var i = 0; i < data.options.length; i++)
+	{
+		var opt = document.createElement("option");
+		opt.text = data.options[i];
+		select.add(opt);
 	}
 }
 
