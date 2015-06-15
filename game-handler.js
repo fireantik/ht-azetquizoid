@@ -1,38 +1,87 @@
 var helpers = require('./helpers.js');
+var images_file = require('./images_db.json');
+var imageDB = [];
+var imageOptions = [];
+
 
 function Game(ws) {
-    this.client1 = ws;
-    this.client2 = null;
+	this.client1 = ws;
+	this.client2 = null;
 
-    this.state = "awaiting";
-    this.id = makeId();
-}
-
-function makeId() {
-    return "4";
+	this.state = "awaiting";
+	this.id = makeId();
+	this.image = imageDB[Math.floor(Math.random() * imageDB.length)];
+	this.options = getRandomOptions();
+	this.size = {
+		x: 10,
+		y: 10
+	};
+	this.time_create = new Date().getTime();
+	this.time_start = null;
+	this.time_end = null;
+	this.client1_score = 0;
+	this.client2_score = 0;
 }
 
 Game.prototype.serialize = function () {
-    return {
-        state: this.state,
-        id: this.id
-    }
+	return {
+		state: this.state,
+		id: this.id
+	}
 }
 
 Game.prototype.start = function (ws2) {
-    this.client2 = ws2;
-    this.state = "active";
+	this.client2 = ws2;
+	this.state = "active";
 }
 
 Game.prototype.message = function (type, data, ws) {
-    var item = this["message_" + type];
-    if (typeof (item) == "function") item.call(this, data, ws);
-    else ws.send(helpers.error("invalid command"));
+	var item = this["message_" + type];
+	if (typeof (item) == "function") item.call(this, data, ws);
+	else ws.send(helpers.error("invalid command"));
 }
 
 Game.prototype.message_status = function (data, ws) {
-    ws.send(helpers.message("status-report", this.serialize()));
+	ws.send(helpers.message("status-report", this.serialize()));
 }
 
+function makeId() {
+	var text = "";
+	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
+	for (var i = 0; i < 5; i++)
+		text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+	return text;
+}
+
+function getRandomOptions(count) {
+	var opts = imageOptions.slice();
+	opts.sort(function () {
+		return 0.5 - Math.random();
+	});
+	return opts.slice(0, 20);
+}
+
+function transformImages() {
+	for (var id in images_file) {
+		var cat = images_file[id];
+		for (var i in cat) {
+			var item = cat[i];
+			imageDB.push({
+				name: id,
+				url: item.url,
+				width: item.width,
+				height: item.height
+			});
+		}
+	}
+}
+
+function bootstrap() {
+	imageOptions = Object.keys(images_file);
+	transformImages();
+}
+
+bootstrap();
 module.exports = Game;

@@ -115,7 +115,9 @@ connect confirmace (dostanou jí oba hráči //TODO)
     "type":"connect-confirm",
     "data":{
         "id":"",
-        "img-url":"" //TODO,
+        "img-url":"", //TODO,
+        "img-width":0, //TODO,
+        "img-height":0, //TODO,
         "options":["",""], //možnosti pro pool odpovědí //TODO
 		"size": {"x":0,"y":0} //počet polí //TODO
     }

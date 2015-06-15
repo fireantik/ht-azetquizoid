@@ -4,8 +4,11 @@ var http = require('http');
 var fs = require('fs');
 var request = require('request');
 
+var NUM_URLS = 20;
+
 var output = {};
 var imagesSized = 0;
+
 
 function getAllImages(id, urls) {
 	var url = urls[0];
@@ -50,7 +53,7 @@ function fetchAllImagesets(urls) {
 					return 0.5 - Math.random();
 				});
 
-				var urlsToGet = lines.slice(1, 20);
+				var urlsToGet = lines.slice(0, NUM_URLS);
 
 
 				getAllImages(id, urlsToGet);
