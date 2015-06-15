@@ -10,15 +10,15 @@
 
 <body>
 	<span id="notifyBar"></span>
-	<div class="scores">
-		<span style="localScore"></span>
-		<span style="remoteScore"></span>
+	<div id="scores">
+		<span id="firstScore"></span>
+		<span id="secondScore"></span>
 	</div>
 	<div id="questionBox">
-		<div id="imageContainer"></div>
+		<div id="imageContainer"><select id="imageGuess"></select></div>
 		<span id="question"></span>
 		<input type="number" id="answer">
-		<button onclick="validateAnswer()">Odpovídám</button>
+		<button onclick="validateAnswer()">Odpovídám</button>	
 	</div>
 	<button onclick="createGame()" id="gameButton">Vytvoř hru</button>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>

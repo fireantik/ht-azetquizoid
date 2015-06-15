@@ -50,7 +50,10 @@ function msgClient(data)
 
 function gameStarted(data)
 {
+	msgClient("Klient připojen ke hře " + data.id);
 	gameData.gameId = data.id;
+	gameData.waiting = false;
+	gameData.running = true;
 	gameData.image = new image(data.img_url, data.img_width, data.img_height, data.options, data.size);
 	document.getElementById("gameButton").style = "visibility:hidden";
 	var img = document.createElement("img");
@@ -60,16 +63,32 @@ function gameStarted(data)
 
 function questionAsked(data)
 {
-		
+	document.getElementById("question").innerHTML = data.text;
 }
 
 function validateAnswer(data)
 {
 	var ans = document.getElementById("answer").value;
+	//checking if value is integer / number - necessary?
 	var params = {
 		text:ans
 	}
 	send("answer", params);
+}
+
+function checkAnswer(data)
+{
+	if(data.correct) msgClient("Správná odpověď"); else msgClient("Špatně!!!!");
+	if(data.pick) pickTile();
+}
+
+function pickTile()
+{
+	var params = {
+		x: 1,
+		y: 1
+	}
+	send("select", params);
 }
 
 function gameCheck()
@@ -83,6 +102,16 @@ function gameCheck()
 		}
 		send("connect", params);
 	//viz design preview
+	}
+}
+
+function updateGameState(data)
+{
+	if(data.state != "active") { msgClient("Hra byla ukončena"); gameData.running = false; } 
+	else
+	{
+		document.getElementById("firstScore").innerHTML = data.player1score;
+		document.getElementById("secondScore").innerHTML = data.player2score;
 	}
 }
 
@@ -100,11 +129,11 @@ socket.onmessage = function (event) {
 		{
 			case "error": console.error(obj.data); break;
 			case "create-confirm": msgClient("Hra byla vytvořena, id: " + data.id); gameData.waiting = true; gameData.initialized = true; break;
-			case "connect-confirm": msgClient("Klient připojen ke hře " + data.id); gameStarted(data); break;
+			case "connect-confirm": gameStarted(data); break;
 			case "question": questionAsked(data); break;
-			case "answer-report": break;
-			case "guess-response" : break;
-			case "status-report": break;
+			case "answer-report": checkAnswer(data); break;
+			case "guess-response": break;
+			case "status-report": updateGameState(data); break;
 			default: console.warn("Unexpected message: " + obj); break;
 		}
 
