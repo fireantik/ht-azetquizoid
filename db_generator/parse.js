@@ -8,7 +8,7 @@ module.exports = {
 };
 
 function addName(name) {
-	if (!module.exports.names.indexOf(name) > -1) module.exports.names.push(name);
+	if (module.exports.names.indexOf(name) == -1) module.exports.names.push(name);
 
 }
 
