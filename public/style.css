@@ -20,7 +20,7 @@
 }
 
 
-* { margin: 0; padding: 0; font-family: 'Roboto', 'RobotoIE', sans-serif; -webkit-tap-highlight-color: rgba(255,255,255,0);transition: all .6s ease-in-out; outline: 0; }
+* { margin: 0; padding: 0; font-family: 'Roboto', 'RobotoIE', sans-serif; -webkit-tap-highlight-color: rgba(255,255,255,0); transition-timing-function: ease-in-out; outline: 0; }
 
 body{
 	background: #eee;
@@ -42,10 +42,12 @@ header{
 	overflow: hidden;
 	position: relative;
 	z-index: 10;
+	transition: height .6s .5s, padding .6s .5s;
 }
 header h1{
 	font-size: 44px;
 	line-height: 40px;
+	transition: font-size .6s .5s;
 }
 header form{
 	margin: 50px auto;
@@ -133,11 +135,9 @@ p{
 .ingame header{
 	height: 40px;
 	padding: 10px 0;
-	transition-delay: .5s;
 }
 .ingame header h1{
 	font-size: 22px;
-	transition-delay: .5s;
 }
 .ingame section.main{
 	animation: fly-out-to-bottom .5s forwards;
@@ -209,12 +209,12 @@ ul.answers li{
 	float: left;
 	border-radius: 3px;
 	box-shadow: 0 1px 2px 0 rgba(0,0,0,.24);
-	transition: background .2s;
+	transition: background-color .2s, background .4s;
 	cursor: pointer;
 	position: relative;
 }
 ul.answers li:hover{
-	background: #FDD835;
+	background-color: #FDD835;
 }
 ul.answers li.correct{
 	background: #8BC34A;
@@ -236,10 +236,12 @@ ul.answers li.my:before, ul.answers li.op:after{
 }
 ul.answers li.my:before{
 	border-left: 12px solid white;
+	animation: slide-from-left .5s ease-out backwards;
 	left: 0;
 }
 ul.answers li.op:after{
 	border-right: 12px solid white;
+	animation: slide-from-right .5s ease-out backwards;
 	right: 0;
 }
     
@@ -267,10 +269,12 @@ ul.answers.selected{
 	top:0;
 	font-size: 20px;
 	text-align: center;
-	display: none;
+	opacity: 0;
+	transition: opacity .7s .5s;
+	pointer-events: none;
 }
 ul.answers.selected.pick + #pick{
-	display: block;
+	opacity: 1;
 }
 
 .gameended > .wrapper > .wrapper{
@@ -312,6 +316,9 @@ ul.answers.selected.pick + #pick{
 
 #question span{
 	font-weight: normal;
+	padding-right: 10px;
+	color: #666;
+	font-size: 15px;
 }
 
 
@@ -363,6 +370,27 @@ ul.answers.selected.pick + #pick{
   }
 }
 
+@keyframes slide-from-left {
+  from {
+    transform: translateX(-12px);
+  }
+}
+@-webkit-keyframes slide-from-left {
+  from {
+    transform: translateX(-12px);
+  }
+}
+
+@keyframes slide-from-right {
+  from {
+    transform: translateX(12px);
+  }
+}
+@-webkit-keyframes slide-from-right {
+  from {
+    transform: translateX(12px);
+  }
+}
 
 
 #notifyBar{
