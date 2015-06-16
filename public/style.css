@@ -183,6 +183,7 @@ p{
 }
 .picture .overlay .erased:hover{
 	background: transparent;
+	cursor: default;
 }
 .picture .overlay .erased{
 	background: transparent;
@@ -223,6 +224,24 @@ ul.answers li.wrong{
 ul.answers li.selected{
 	background: #F9A825;
 }
+ul.answers li.my:before{
+	width: 0px;
+    height: 0px;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid white;
+}
+ul.answers li.op:before{
+	width: 0px;
+    height: 0px;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-right: 5px solid white;
+}
+    
+
+
+
 ul.answers.selected{
 	pointer-events: none;
 }

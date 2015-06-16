@@ -8,7 +8,8 @@ var gameData = {
 	image: null,
 	timestamp: null,
 	canPick: false,
-	gameId: -1
+	gameId: -1,
+	answerid: 0
 }
 window.questionCount = 1;
 
@@ -94,6 +95,7 @@ function questionAsked(data)
 			validateAnswer(this.innerHTML);
 			this.className="selected";
 			document.getElementById("answerList").className = "answers selected";
+			gameData.answerid = this.id;
 		});
 		list.appendChild(button);
 	}
@@ -111,11 +113,28 @@ function validateAnswer(text)
 
 function checkAnswer(data)
 {
-	if(data.correct) msgClient("Správná odpověď"); else msgClient("Špatně!!!!");
+	var answer = document.getElementById(gameData.answerid);
+	if(data.correct) { 
+		msgClient("Správná odpověď");
+		answer.className = "correct my";
+	} else {
+		msgClient("Špatně!!!!");
+		answer.className = "wrong my";
+	}
 	if(data.pick) { 
 		msgClient("Vyberte pole");
 		gameData.canPick = true;
 		document.getElementById("answerList").className = "answers selected pick";
+	}
+	for(var i = 0; i < 4; i++)
+	{
+		var button = document.getElementById("answer_" + i);
+		if(button.innerHTML == data.correct_answer){
+			button.className += " correct";
+		}
+		if(button.innerHTML == data.opponent_answer){
+			button.className += " wrong op";
+		}
 	}
 }
 
