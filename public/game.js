@@ -251,6 +251,21 @@ function handleSelect(data)
 	}
 }
 
+function guessImage()
+{
+	var select = document.getElementById("imageGuess");
+	var text = select.options[select.selectedIndex].text;
+	var params = {
+		text:text
+	}
+	send("guess", params);
+}
+
+function handleGuess(data)
+{
+	if(data.correct) msgClient("Výhra!"); else msgClient("Špatně, hrajete dál!");
+}
+
 socket.onopen = function (event) {
   gameData.initialized = true;
   gameCheck();
@@ -268,7 +283,7 @@ socket.onmessage = function (event) {
 			case "connect-confirm": gameStarted(data); break;
 			case "question": questionAsked(data); break;
 			case "answer-report": checkAnswer(data); break;
-			case "guess-response": break;
+			case "guess-response": handleGuess(data); break;
 			case "status-report": updateGameState(data); break;
 			default: console.warn("Unexpected message: " + obj); break;
 		}
