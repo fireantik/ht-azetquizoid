@@ -1,8 +1,8 @@
 var helpers = require('./helpers.js');
 var questions = require('./question-handler.js');
-var images_file = require('./images_db.json');
-var imageDB = [];
-var imageOptions = [];
+var images_file = require('./db_generator/parse.js');
+var imageDB = images_file.items;
+var imageOptions = images_file.names;
 
 var correct_answer_score = 5;
 var wrong_answer_score = 0;
@@ -309,24 +309,8 @@ function getRandomOptions(count, included) {
 	return sliced;
 }
 
-function transformImages() {
-	for (var id in images_file) {
-		var cat = images_file[id];
-		for (var i in cat) {
-			var item = cat[i];
-			imageDB.push({
-				name: id,
-				url: item.url,
-				width: item.width,
-				height: item.height
-			});
-		}
-	}
-}
-
 function bootstrap() {
-	imageOptions = Object.keys(images_file);
-	transformImages();
+
 }
 
 bootstrap();

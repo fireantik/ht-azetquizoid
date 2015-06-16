@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<style>
+		html,
+		body {
+			width: 100%;
+		}
+		
+		#top {
+			position: fixed;
+			top: 10px;
+			left: 10px;
+			height: 40px;
+			background: white;
+		}
+		
+		#container {
+			margin-top: 50px;
+		}
+		
+		#container img {
+			width: 350px;
+			position: relative;
+			margin-bottom: 20px;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		
+		#container img.picked {
+			border: 2px dashed red;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="top">
+		<form onsubmit="load()" action="#">
+			<input type="text" id="url" value="http://image-net.org/api/text/imagenet.synset.geturls?wnid=n02121808">
+			<input type="submit" value="load">
+		</form>
+		<form onsubmit="save()" action="#">
+			<input type="text" id="name" value="kočka">
+			<input type="submit" value="save">
+		</form>
+	</div>
+
+	<div id="container">
+
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
+	<script src="script.js"></script>
+</body>
+
+</html>
