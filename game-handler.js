@@ -10,7 +10,6 @@ var first_answer_score = 5;
 var correct_guess_score = 20;
 var wrong_guess_score = -10;
 
-
 function Game(ws, closeCallback) {
 	this.closeCallback = closeCallback;
 
