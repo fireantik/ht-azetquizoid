@@ -118,18 +118,23 @@ function checkAnswer(data)
 			button.className = " correct";
 		}
 		if(button.innerHTML == data.opponent_answer){
-			button.className = " wrong op";
+			button.className += " op";
+			if(data.opponent_answer == data.correct_answer){
+				button.className +=" correct";
+			} else {
+				button.className +=" wrong";
+			}
 		}
 	}
 
 	var answer = document.getElementById(gameData.answerid);
 	if(data.correct) { 
 		msgClient("Správná odpověď");
-		answer.className += "correct my";
 	} else {
 		msgClient("Špatně!!!!");
-		answer.className += "wrong my";
+		answer.className += " wrong";
 	}
+	answer.className += " me";
 	if(data.pick) { 
 		msgClient("Vyberte pole");
 		gameData.canPick = true;

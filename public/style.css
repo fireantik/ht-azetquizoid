@@ -211,6 +211,7 @@ ul.answers li{
 	box-shadow: 0 1px 2px 0 rgba(0,0,0,.24);
 	transition: background .2s;
 	cursor: pointer;
+	position: relative;
 }
 ul.answers li:hover{
 	background: #FDD835;
@@ -224,24 +225,22 @@ ul.answers li.wrong{
 ul.answers li.selected{
 	background: #F9A825;
 }
-ul.answers li.my:before{
+ul.answers li.my:before, ul.answers li.op:after{
 	content: "";
 	width: 0px;
 	height: 0px;
 	border-top: 18px solid transparent;
 	border-bottom: 18px solid transparent;
-	border-left: 12px solid white;
 	position: absolute;
-	left: 0;
 	top: 8px;
 }
-ul.answers li.op:before{
-	content: "";
-	width: 0px;
-    height: 0px;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    border-right: 5px solid white;
+ul.answers li.my:before{
+	border-left: 12px solid white;
+	left: 0;
+}
+ul.answers li.op:after{
+	border-right: 12px solid white;
+	right: 0;
 }
     
 
