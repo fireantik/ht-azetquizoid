@@ -134,7 +134,7 @@ function checkAnswer(data)
 		msgClient("Špatně!!!!");
 		answer.className += " wrong";
 	}
-	answer.className += " me";
+	answer.className += " my";
 	if(data.pick) { 
 		msgClient("Vyberte pole");
 		gameData.canPick = true;
