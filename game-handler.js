@@ -23,8 +23,8 @@ function Game(ws, closeCallback) {
 	this.image = imageDB[Math.floor(Math.random() * imageDB.length)];
 	this.options = getRandomOptions(20, this.image.name);
 	this.size = {
-		x: 10,
-		y: 10
+		x: Math.round(this.image.width / 50),
+		y: Math.round(this.image.height / 50)
 	};
 	this.time_create = Date.now();
 	this.time_start = null;
