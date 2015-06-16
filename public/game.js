@@ -114,6 +114,7 @@ function checkAnswer(data)
 	for(var i = 0; i < 4; i++)
 	{
 		var button = document.getElementById("answer_" + i);
+		button.className = "";
 		if(button.innerHTML == data.correct_answer){
 			button.className = " correct";
 		}
