@@ -24,7 +24,7 @@ app.ws('/game', function (ws, req) {
 	var game = null;
 
 	ws.on('message', function (msg) {
-		console.log("received", msg, "from", req.connection.remoteAddress);
+		helpers.logDebug("received", msg, "from", req.connection.remoteAddress);
 
 		var obj = JSON.parse(msg);
 		if (!obj.type) {
@@ -74,13 +74,13 @@ app.ws('/game', function (ws, req) {
 				ws.send(helpers.error("invalid first message. only create/connect are valid"));
 			}
 		} else {
-			//try {
-			game.message(type, data, ws);
-			/*} catch (ex) {
-				console.log(game.id, "error");
-				console.log(ex);
+			try {
+				game.message(type, data, ws);
+			} catch (ex) {
+				helpers.logError(game.id, "error");
+				helpers.logError(ex);
 				game.close();
-			}*/
+			}
 		}
 	});
 
@@ -92,13 +92,13 @@ app.ws('/game', function (ws, req) {
 		for (var i in games) {
 			if (games[i].id == gm.id) {
 				games.splice(i, 1);
-				console.log("closed game", gm.id);
+				helpers.logDebug("closed game", gm.id);
 				break;
 			}
 		}
 		game = null;
 		ws.close();
-		console.log("crrently running", games.length, "games");
+		helpers.logDebug("crrently running", games.length, "games");
 	}
 });
 
@@ -107,5 +107,5 @@ var server = app.listen(port, function () {
 	var host = server.address().address;
 	var port = server.address().port;
 
-	console.log('App listening at http://%s:%s', host, port);
+	helpers.logDebug('App listening at http://%s:%s', host, port);
 });

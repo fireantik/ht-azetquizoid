@@ -69,7 +69,7 @@ Game.prototype.close = function () {
 	if (this.client2) this.client2.close();
 	this.state = "closed";
 	this.closeCallback(this);
-	console.log("closed", this.id);
+	helpers.logDebug("closed", this.id);
 }
 
 Game.prototype.start = function (ws2) {
@@ -87,7 +87,7 @@ Game.prototype.start = function (ws2) {
 
 	this.broadcast(conConfirm);
 
-	console.log("game", this.id, "started");
+	helpers.logDebug("game", this.id, "started");
 
 	this.newQuestion();
 	this.broadcast_status_report();
@@ -163,7 +163,7 @@ Game.prototype.someone_answered = function (who, what) {
 		this.client2_answer_timestamp = Date.now();
 	}
 
-	console.log("client", who, "answered", what);
+	helpers.logDebug("client", who, "answered", what);
 
 	if (this.client1_answer && this.client2_answer) this.questionEnded();
 }
@@ -214,7 +214,7 @@ Game.prototype.newQuestion = function () {
 }
 
 Game.prototype.uncoverCell = function (x, y) {
-	console.log("uncovering", x, y);
+	helpers.logDebug("uncovering", x, y);
 	this.uncovered[y][x] = true;
 }
 
@@ -233,7 +233,7 @@ Game.prototype.pickRandomCell = function () {
 }
 
 Game.prototype.questionEnded = function () {
-	console.log(this.id, "question ended");
+	helpers.logDebug(this.id, "question ended");
 
 	clearTimeout(this.question_timeout);
 	this.question_timeout = null;
