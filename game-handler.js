@@ -10,6 +10,8 @@ var first_answer_score = 5;
 var correct_guess_score = 20;
 var wrong_guess_score = -10;
 
+var question_time = 60000;
+
 function Game(ws, closeCallback) {
 	this.closeCallback = closeCallback;
 
@@ -32,7 +34,7 @@ function Game(ws, closeCallback) {
 
 	this.question = null;
 	this.question_timestamp = null;
-	this.question_answer_time = 5000;
+	this.question_answer_time = question_time;
 	this.question_timeout = null;
 
 	this.client1_answer = null;
