@@ -258,13 +258,15 @@ Game.prototype.questionEnded = function () {
 	var c1report = {
 		correct: c1correct,
 		pick: this.client1_picking,
-		correct_answer: this.question.answer
+		correct_answer: this.question.answer,
+		opponent_answer: this.client2_answer
 	};
 
 	var c2report = {
 		correct: c2correct,
 		pick: this.client2_picking,
-		correct_answer: this.question.answer
+		correct_answer: this.question.answer,
+		opponent_answer: this.client1_answer
 	};
 
 	this.client1_score += c1report.correct ? correct_answer_score : wrong_answer_score;
