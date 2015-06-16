@@ -185,8 +185,7 @@ function updateGameState(data)
 
 function uncover(x,y)
 {
-	if(!document.getElementById(y + "_" + x).className == "erased")
-	document.getElementById(y + "_" + x).className += "erased";
+	document.getElementById(y + "_" + x).className = "erased";
 }
 
 function handleImage()
