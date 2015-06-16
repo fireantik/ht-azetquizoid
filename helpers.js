@@ -20,10 +20,10 @@ module.exports = {
 	log: log,
 	logDebug: function () {
 		console.log.apply(this, arguments);
-		log.debug.apply(this.arguments);
+		log.debug.apply(this, arguments);
 	},
 	logError: function () {
 		console.log.apply(this, arguments);
-		log.error.apply(this.arguments);
+		log.error.apply(this, arguments);
 	}
 }
