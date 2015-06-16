@@ -23,7 +23,8 @@ function image(url, width, height, options, x, y)
 	this.y = y;
 }
 
-function send(type, data) {
+function send(type, data)
+{
 	var obj = {
 		type: type,
 		data: data
@@ -31,7 +32,8 @@ function send(type, data) {
 	socket.send(JSON.stringify(obj));
 }
 
-function parseMsg(event) {
+function parseMsg(event)
+{
 	var msg = event.data;
 	var obj = JSON.parse(msg);
 	return obj;
