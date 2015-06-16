@@ -362,3 +362,15 @@ ul.answers.selected.pick + #pick{
     opacity:0;
   }
 }
+
+
+
+#notifyBar{
+	width: 400px;
+	height: 20px;
+	padding: 10px;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	background: #ddd;
+}
