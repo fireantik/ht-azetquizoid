@@ -68,7 +68,6 @@ function gameStarted(data)
 	gameData.waiting = false;
 	gameData.running = true;
 	gameData.image = new image(data.img_url, data.img_width, data.img_height, data.options, data.size.x, data.size.y);
-	//document.getElementById("gameButton").style = "visibility:hidden";
 	document.getElementsByTagName('BODY')[0].className='ingame';
 	var img = document.createElement("img");
 	img.src = gameData.image.url;
@@ -104,7 +103,6 @@ function questionAsked(data)
 
 function validateAnswer(text)
 {
-	//ZNEMOŽNIT KLIKNUTÍ NA DALŠÍ DIVY
 	var params = {
 		text:text
 	}
@@ -113,28 +111,29 @@ function validateAnswer(text)
 
 function checkAnswer(data)
 {
+	for(var i = 0; i < 4; i++)
+	{
+		var button = document.getElementById("answer_" + i);
+		if(button.innerHTML == data.correct_answer){
+			button.className = " correct";
+		}
+		if(button.innerHTML == data.opponent_answer){
+			button.className = " wrong op";
+		}
+	}
+
 	var answer = document.getElementById(gameData.answerid);
 	if(data.correct) { 
 		msgClient("Správná odpověď");
-		answer.className = "correct my";
+		answer.className += "correct my";
 	} else {
 		msgClient("Špatně!!!!");
-		answer.className = "wrong my";
+		answer.className += "wrong my";
 	}
 	if(data.pick) { 
 		msgClient("Vyberte pole");
 		gameData.canPick = true;
 		document.getElementById("answerList").className = "answers selected pick";
-	}
-	for(var i = 0; i < 4; i++)
-	{
-		var button = document.getElementById("answer_" + i);
-		if(button.innerHTML == data.correct_answer){
-			button.className += " correct";
-		}
-		if(button.innerHTML == data.opponent_answer){
-			button.className += " wrong op";
-		}
 	}
 }
 
