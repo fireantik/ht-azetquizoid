@@ -78,6 +78,17 @@ function gameStarted(data)
 function questionAsked(data)
 {
 	document.getElementById("question").innerHTML = data.text;
+	var list = document.getElementById("answerList");
+	while (list.firstChild) {
+    list.removeChild(list.firstChild);
+	}	
+	for(var i = 0; i < data.question_options.length; i++)
+	{
+		var button = document.createElement("li");
+		button.innerHTML = data.question_options[i];
+		button.id = "answer_" + i;
+		list.appendChild(button);
+	}
 }
 
 function validateAnswer(data)
@@ -172,6 +183,8 @@ function handleOverlay(){
 			style += "width: calc(" + x_r + "% - 10px);";
 			tile.setAttribute("style", style);
 			tile.innerHTML = i;
+			tile.setAttribute("x", x);
+			tile.setAttribute("y", y);
 			overlay.appendChild(tile);
 			i++;
 		}
