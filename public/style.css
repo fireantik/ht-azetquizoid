@@ -179,6 +179,9 @@ p{
 .picture .overlay div:hover{
 	background: #eee;
 }
+.picture .overlay .erased:hover{
+	background: transparent;
+}
 .picture .overlay .erased{
 	background: transparent;
 	color: transparent;
