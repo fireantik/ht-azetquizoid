@@ -1,3 +1,8 @@
+function addSelected(num) {
+	var now = parseInt($("#num_selected").text());
+	$("#num_selected").text(now + num);
+}
+
 function load() {
 	var url = $("#url").val();
 	console.log("loading", url);
@@ -5,7 +10,7 @@ function load() {
 		var lines = data.split("\r\n");
 		var i = 0;
 		lines.forEach(function (link) {
-			//if (i > 20) return;
+			if (i > 200) return;
 			var img = $('<img />');
 			img.attr('src', link);
 			img.appendTo('#container');
@@ -14,8 +19,13 @@ function load() {
 
 		$("#container img").click(function () {
 			console.log("click");
-			if ($(this).hasClass("picked")) $(this).removeClass("picked");
-			else $(this).addClass("picked");
+			if ($(this).hasClass("picked")) {
+				$(this).removeClass("picked");
+				addSelected(-1);
+			} else {
+				$(this).addClass("picked");
+				addSelected(1);
+			}
 		});
 	});
 }
