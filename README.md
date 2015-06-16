@@ -144,7 +144,8 @@ info o odpovědi
     "type":"answer-report",
     "data":{
         "correct":true|false, //byla správná
-		"pick":true|false //vybírá pole
+		"pick":true|false, //vybírá pole
+		"correct_answer":""
     }
 }
 ```
