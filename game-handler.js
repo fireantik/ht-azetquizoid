@@ -304,15 +304,37 @@ function makeId() {
 	return text;
 }
 
+function shuffle(array) {
+	var counter = array.length,
+		temp, index;
+
+	// While there are elements in the array
+	while (counter > 0) {
+		// Pick a random index
+		index = Math.floor(Math.random() * counter);
+
+		// Decrease counter by 1
+		counter--;
+
+		// And swap the last element with it
+		temp = array[counter];
+		array[counter] = array[index];
+		array[index] = temp;
+	}
+
+	return array;
+}
+
 function getRandomOptions(count, included) {
 	var opts = imageOptions.slice();
-	opts.filter(function (a) {
+	opts = opts.filter(function (a) {
 		return a != included;
-	}).sort(function (a) {
-		return 0.5 - Math.random();
 	});
+	opts = shuffle(opts);
+
 	var sliced = opts.slice(0, count - 1);
 	sliced.push(included);
+	opts = shuffle(sliced);
 	return sliced;
 }
 
