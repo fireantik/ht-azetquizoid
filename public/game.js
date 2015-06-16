@@ -9,6 +9,7 @@ var gameData = {
 	timestamp: null,
 	gameId: -1
 }
+window.questionCount = 1;
 
 function image(url, width, height, options, x, y)
 {
@@ -77,7 +78,7 @@ function gameStarted(data)
 
 function questionAsked(data)
 {
-	document.getElementById("question").innerHTML = data.text;
+	document.getElementById("question").innerHTML = "<span>Otázka " + window.questionCount + ":</span> " + data.text;
 	var list = document.getElementById("answerList");
 	while (list.firstChild) {
     list.removeChild(list.firstChild);
@@ -87,6 +88,7 @@ function questionAsked(data)
 		var button = document.createElement("li");
 		button.innerHTML = data.question_options[i];
 		button.id = "answer_" + i;
+		button.addEventListener("click", function(){  validateAnswer(data.question_options[i])});
 		list.appendChild(button);
 	}
 }

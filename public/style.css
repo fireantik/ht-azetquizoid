@@ -86,7 +86,7 @@ p{
 .game > .wrapper{
 	background: white;
 	padding-top: 100px;
-	height: 100%;
+	min-height: 100%;
 	padding: 0;
 	box-shadow: 0 0px 5px rgba(0,0,0,0.2);
 	max-width: 940px;
@@ -264,7 +264,9 @@ ul.answers li.selected{
 	content: "Prohra";
 }
 
-
+#question span{
+	font-weight: normal;
+}
 
 
 
