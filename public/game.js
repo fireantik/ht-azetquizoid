@@ -81,6 +81,7 @@ function questionAsked(data)
 {
 	document.getElementById("question").innerHTML = "<span>Otázka " + window.questionCount + ":</span> " + data.text;
 	var list = document.getElementById("answerList");
+	list.className = "answers";
 	while (list.firstChild) {
     list.removeChild(list.firstChild);
 	}	
@@ -89,7 +90,11 @@ function questionAsked(data)
 		var button = document.createElement("li");
 		button.innerHTML = data.question_options[i];
 		button.id = "answer_" + i;
-		button.addEventListener("click", function(){ validateAnswer(data.question_options[i]); this.className="selected"; });
+		button.addEventListener("click", function(){
+			validateAnswer(this.innerHTML);
+			this.className="selected";
+			document.getElementById("answerList").className = "answers selected";
+		});
 		list.appendChild(button);
 	}
 }

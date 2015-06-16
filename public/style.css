@@ -218,6 +218,9 @@ ul.answers li.wrong{
 ul.answers li.selected{
 	background: #F9A825;
 }
+ul.answers.selected{
+	pointer-events: none;
+}
 .game .qwrapper{
 	overflow: auto;
 	padding-bottom: 30px;
