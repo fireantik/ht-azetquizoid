@@ -7,6 +7,7 @@ var gameData = {
 	debugMode: true,
 	image: null,
 	timestamp: null,
+	canPick: false,
 	gameId: -1
 }
 window.questionCount = 1;
@@ -88,17 +89,16 @@ function questionAsked(data)
 		var button = document.createElement("li");
 		button.innerHTML = data.question_options[i];
 		button.id = "answer_" + i;
-		button.addEventListener("click", function(){  validateAnswer(data.question_options[i])});
+		button.addEventListener("click", function(){ validateAnswer(data.question_options[i]); this.className="selected"; });
 		list.appendChild(button);
 	}
 }
 
-function validateAnswer(data)
+function validateAnswer(text)
 {
-	var ans = document.getElementById("answer").value;
-	//checking if value is integer / number - necessary?
+	//ZNEMOŽNIT KLIKNUTÍ NA DALŠÍ DIVY
 	var params = {
-		text:ans
+		text:text
 	}
 	send("answer", params);
 }
@@ -106,16 +106,20 @@ function validateAnswer(data)
 function checkAnswer(data)
 {
 	if(data.correct) msgClient("Správná odpověď"); else msgClient("Špatně!!!!");
-	if(data.pick) { msgClient("Vyberte pole"); pickTile(); }
+	if(data.pick) { msgClient("Vyberte pole"); gameData.canPick = true; }
 }
 
-function pickTile()
+function pickTile(x,y)
 {
-	var params = {
-		x: 1,
-		y: 1
+	if(gameData.canPick)
+	{
+		var params = {
+			x: x,
+			y: y
+		}
+		send("select", params);
 	}
-	send("select", params);
+	gameData.canPick = false;
 }
 
 function gameCheck()
@@ -140,6 +144,20 @@ function updateGameState(data)
 		document.getElementById("firstScore").innerHTML = data.player1score;
 		document.getElementById("secondScore").innerHTML = data.player2score;
 	}
+
+	for(var y = 0; y < gameData.image.y; y++)
+	{
+		for(var x = 0; x < gameData.image.x; x++)
+		{
+			if(data.uncovered[y][x]) uncover(x, y);
+		}
+	}
+}
+
+function uncover(x,y)
+{
+	document.getElementById(y + "_" + x).className += "erased";
+
 }
 
 function handleImage()
@@ -187,6 +205,8 @@ function handleOverlay(){
 			tile.innerHTML = i;
 			tile.setAttribute("x", x);
 			tile.setAttribute("y", y);
+			tile.setAttribute("onclick", "pickTile(" + x + "," + y + ")");
+			tile.id = y + "_" + x;
 			overlay.appendChild(tile);
 			i++;
 		}

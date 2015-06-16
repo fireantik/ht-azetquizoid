@@ -181,6 +181,7 @@ p{
 }
 .picture .overlay .erased{
 	background: transparent;
+	color: transparent;
 }
 .picture img{
 	width: 100%;
