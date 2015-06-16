@@ -151,6 +151,8 @@ p{
 .question{
 	width: 530px;
 	float: left;
+	overflow: auto;
+	position: relative;
 }
 .picture{
 	padding: 10px;
@@ -232,7 +234,21 @@ ul.answers.selected{
 	clear: left;
 	text-align: center;
 }
-
+#pick{
+	width: 100%;
+	height: calc(100% - 80px);
+	padding-top: 80px;
+	background: rgba(255,255,255,.8);
+	position: absolute;
+	left:0;
+	top:0;
+	font-size: 20px;
+	text-align: center;
+	display: none;
+}
+ul.answers.selected.pick + #pick{
+	display: block;
+}
 
 .gameended > .wrapper > .wrapper{
 	animation: fly-out-to-bottom .5s forwards;

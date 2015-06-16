@@ -97,6 +97,7 @@ function questionAsked(data)
 		});
 		list.appendChild(button);
 	}
+	window.questionCount++;
 }
 
 function validateAnswer(text)
@@ -111,7 +112,11 @@ function validateAnswer(text)
 function checkAnswer(data)
 {
 	if(data.correct) msgClient("Správná odpověď"); else msgClient("Špatně!!!!");
-	if(data.pick) { msgClient("Vyberte pole"); gameData.canPick = true; }
+	if(data.pick) { 
+		msgClient("Vyberte pole");
+		gameData.canPick = true;
+		document.getElementById("answerList").className = "answers selected pick";
+	}
 }
 
 function pickTile(x,y)
