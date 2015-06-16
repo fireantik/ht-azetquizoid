@@ -145,7 +145,8 @@ info o odpovědi
     "data":{
         "correct":true|false, //byla správná
 		"pick":true|false, //vybírá pole
-		"correct_answer":""
+		"correct_answer":"",
+		"opponent_answer":""
     }
 }
 ```
