@@ -131,6 +131,7 @@ nová otázka
     "type":"question",
     "data":{
         "text":"",
+        "question_options":[""],
 		"timestamp":0,
 		"answer_time":0 // čas na odpověď v MS
     }
@@ -168,6 +169,7 @@ status response (info o hře)
 		"options":["",""], //zbyvajici moznosti
 		"state":"running|ended", //hra běží nebo je dohraná.
 		"question":"",
+		"question_options":[""],
 		"uncovered":[] //dvourozměrné pole s odkrytými bloky [y][x]. true = odkrytý
     }
 }
