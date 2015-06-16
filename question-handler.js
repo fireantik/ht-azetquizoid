@@ -1,12 +1,15 @@
 function generate() {
-	return "2 + 5 = ?"; //TODO
+	return {
+		question: "2 + 5 = ?",
+		options: ["8", "7", "6", "5"],
+		answer: "7"
+	}
 }
 
-function validate(question, answer) {
-	return answer == "7"; //TODO
-}
-
-module.exports = {
-	generate: generate,
-	validate: validate
+module.exports = function () {
+	return {
+		question: "2 + 5 = ?",
+		options: ["8", "7", "6", "5"],
+		answer: "7"
+	}
 }

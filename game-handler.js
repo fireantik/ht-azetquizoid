@@ -183,7 +183,8 @@ Game.prototype.makeStatusReport = function () {
 		player2score: this.client2_score,
 		"options": this.options,
 		"state": this.state,
-		"question": this.question,
+		"question": this.question.question,
+		"question_options": this.question.options,
 		"uncovered": this.uncovered
 	});
 }
@@ -195,7 +196,7 @@ Game.prototype.newQuestion = function () {
 	this.client1_answer_timestamp = null;
 	this.client2_answer = null;
 	this.client2_answer_timestamp = null;
-	this.question = questions.generate();
+	this.question = questions();
 	this.question_timestamp = Date.now();
 	var a = this;
 	this.question_timeout = setTimeout(function () {
@@ -203,7 +204,8 @@ Game.prototype.newQuestion = function () {
 	}, this.question_answer_time);
 
 	var qmsg = helpers.message("question", {
-		"text": this.question,
+		"text": this.question.question,
+		"question_options": this.question.options,
 		"timestamp": this.question_timestamp,
 		"answer_time": this.question_answer_time
 	});
@@ -235,8 +237,8 @@ Game.prototype.questionEnded = function () {
 	clearTimeout(this.question_timeout);
 	this.question_timeout = null;
 
-	var c1correct = questions.validate(this.question, this.client1_answer);
-	var c2correct = questions.validate(this.question, this.client2_answer);
+	var c1correct = this.client1_answer == this.question.answer;
+	var c2correct = this.client2_answer == this.question.answer;
 
 
 
