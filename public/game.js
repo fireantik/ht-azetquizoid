@@ -69,12 +69,12 @@ function gameStarted(data)
 	gameData.running = true;
 	gameData.image = new image(data.img_url, data.img_width, data.img_height, data.options, data.size.x, data.size.y);
 	document.getElementsByTagName('BODY')[0].className='ingame';
+	setTimeout(function(){ document.getElementById("main").style.display = "none" }, 1000);
 	var img = document.createElement("img");
 	img.src = gameData.image.url;
 	document.getElementById("imageContainer").appendChild(img);
 	handleOverlay();
 	handleSelect(data);
-
 }
 
 function questionAsked(data)

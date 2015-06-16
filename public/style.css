@@ -25,6 +25,7 @@
 body{
 	background: #eee;
 	overflow-y: scroll;
+	min-width: 257px;
 }
 .wrapper{
 	max-width: 900px;
@@ -322,6 +323,34 @@ ul.answers.selected.pick + #pick{
 }
 
 
+@media  only screen and (max-width: 960px)  {
+	.question{
+		padding-bottom: 50px;
+	}
+	.question, .picture{
+		float: none;
+		margin: 0 auto;
+	}
+}
+@media  only screen and (max-width: 600px)  {
+	.question,.picture{
+		width: calc(100% - 20px);
+		min-width: 200px;
+	}
+	ul.answers li{
+		float: none;
+		width: 100%;
+		margin: 10px 0;
+	}
+}
+@media  only screen and (max-width: 420px)  {
+	.wrapper{
+		padding: 0 10px;
+	}
+	header input[type="text"] {
+    	width: calc(100% - 40px);
+    }
+}
 
 @keyframes fly-out-to-bottom {
   to {
