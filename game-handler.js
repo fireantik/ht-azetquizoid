@@ -251,8 +251,13 @@ Game.prototype.questionEnded = function () {
 	} else if (!c1correct && c2correct) {
 		this.client2_picking = true;
 	} else {
-		if (this.client1_answer_timestamp < this.client2_answer_timestamp) this.client1_picking = true;
-		else this.client2_picking = true;
+		if (this.client1_answer_timestamp < this.client2_answer_timestamp) {
+			this.client1_picking = true;
+			this.client2_picking = false;
+		} else {
+			this.client1_picking = false;
+			this.client2_picking = true;
+		}
 	}
 
 	var c1report = {
@@ -281,6 +286,8 @@ Game.prototype.questionEnded = function () {
 }
 
 Game.prototype.donePicking = function () {
+	this.client1_picking = false;
+	this.client2_picking = false;
 	this.broadcast_status_report();
 	this.newQuestion();
 }
