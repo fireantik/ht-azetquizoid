@@ -156,7 +156,7 @@ function updateGameState(data)
 
 function uncover(x,y)
 {
-	document.getElementById(y + "_" + x).style += "background-color:transparent;";
+	document.getElementById(y + "_" + x).className += "erased";
 
 }
 
