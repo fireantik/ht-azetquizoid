@@ -173,6 +173,7 @@ p{
 }
 .picture{
 	padding: 10px;
+	padding-bottom: 0;
 	width: 350px;
 	float: right;
 	position:relative;
@@ -182,8 +183,9 @@ p{
 	position: absolute;top: 10px;
 	left: 10px;
 	width: calc(100% - 20px);
-	height: calc(100% - 20px);
+	height: calc(100% - 10px);
 	z-index: 5;
+	overflow: hidden;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
@@ -205,20 +207,20 @@ p{
 	background: #eee;
 }
 .picture .overlay .erased:hover{
-	background: transparent;
 	cursor: default;
 }
 .picture .overlay .erased{
-	background: transparent;
+	animation: fly-out-front .5s ease-in-out forwards;
 	color: transparent;
 }
 .picture img{
-	width: 100%;
+	width: calc(100% - 1px);
 }
 
 ul.answers{
 	list-style-type: none;
 	margin-top: 30px;
+	overflow: hidden
 }
 ul.answers li{
 	display: block;
@@ -236,6 +238,16 @@ ul.answers li{
 	cursor: pointer;
 	position: relative;
 }
+ul.answers li:nth-child(odd){
+	animation: answers-slide-left .4s cubic-bezier(0.44, 0, 0.49, 1.32) backwards;
+}
+ul.answers li:nth-child(even){
+	animation: answers-slide-right .4s cubic-bezier(0.44, 0, 0.49, 1.32) backwards;
+}
+ul.answers li:nth-child(1) { animation-delay: .1s;}
+ul.answers li:nth-child(2) { animation-delay: .2s;}
+ul.answers li:nth-child(3) { animation-delay: .3s;}
+ul.answers li:nth-child(4) { animation-delay: .4s;}
 ul.answers li:hover{
 	background-color: #FDD835;
 }
@@ -276,11 +288,39 @@ ul.answers.selected{
 }
 .game .qwrapper{
 	overflow: auto;
-	padding-bottom: 30px;
 }
 .game .form{
-	clear: left;
+	clear: both;
 	text-align: center;
+	width: 349px;
+    margin: -1px 11px 0 10px;
+    float: right;
+    background-color: #d4d4d4;
+    box-shadow: inset 0 8px 10px -10px rgba(0,0,0,0.5);
+    padding: 12px 0;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.game .form h3{
+    padding-bottom: 7px;
+}
+.game .form select{
+	padding: 2px 5px;
+    height: 24px;
+    border: 1px solid #bbb;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.game .form button{
+	padding: 2px 5px;
+    height: 24px;
+    border: 1px solid #bbb;
+    color: white;
+    background: #2196F3;
+    margin-left: -5px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    cursor: pointer;
 }
 #pick{
 	width: 100%;
@@ -464,6 +504,32 @@ ul.answers.selected.pick + #pick{
   }
 }
 
+@keyframes answers-slide-left {
+  from {
+    transform: translateX(-40px);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes answers-slide-left {
+  from {
+    transform: translateX(-40px);
+    opacity: 0;
+  }
+}
+
+@keyframes answers-slide-right {
+  from {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes answers-slide-right {
+  from {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+}
+
 @keyframes slide-from-right {
   from {
     transform: translateX(12px);
@@ -472,6 +538,19 @@ ul.answers.selected.pick + #pick{
 @-webkit-keyframes slide-from-right {
   from {
     transform: translateX(12px);
+  }
+}
+
+@keyframes fly-out-front {
+  to {
+    transform: scale(2) rotate(110deg);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes fly-out-front {
+  to {
+    transform: scale(2) rotate(110deg);
+    opacity: 0;
   }
 }
 

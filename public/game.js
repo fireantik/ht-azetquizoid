@@ -260,6 +260,10 @@ function handleOverlay() {
 			i++;
 		}
 	}
+	var clear = document.createElement("div");
+	var style = "background: #ddd; height: 20px;width: calc(100% - 11px)";
+	clear.setAttribute("style", style);
+	overlay.appendChild(clear);
 }
 
 function handleSelect(data) {
