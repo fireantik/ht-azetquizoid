@@ -342,7 +342,7 @@ ul.answers.selected.pick + #pick{
 	opacity: 1;
 }
 
-.gameended .question, .gameended .game .form {
+.gameended .question, .gameended.game .form {
 	animation: fly-out-to-bottom .5s forwards;
 }
 .gameended .scoretable{
