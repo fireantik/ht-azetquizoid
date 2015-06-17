@@ -12,7 +12,9 @@ var gameData = {
 	waitCount: 0,
 	answerid: 0,
 	timeInterval: null,
-	answerTime: 0
+	correctGuess: false,
+	answerTime: 0,
+	iStartedTheGame: false
 }
 window.questionCount = 1;
 
@@ -61,6 +63,7 @@ function createGame() {
 		send("create", {});
 		gameData.waiting = true;
 		document.getElementById("url").className = "established";
+		gameData.iStartedTheGame = true;
 	}
 }
 
@@ -200,9 +203,15 @@ function updateGameState(data) {
 	document.getElementById("secondScore").innerHTML = data.player2score;
 
 	if (data.state != "active" && gameData.running) {
+		if(gameData.correctGuess)
+		{
+			gameEnded("guess");
+			gameData.running = false;
+		} else {
 		msgClient("Hra byla ukončena");
 		gameData.running = false;
 		gameEnded("ended");
+	}
 	} else {
 		for (var y = 0; y < gameData.image.y; y++) {
 			for (var x = 0; x < gameData.image.x; x++) {
@@ -289,8 +298,7 @@ function guessImage() {
 function handleGuess(data) {
 	if (data.correct) 
 		{
-			gameEnded("guess");
-			gameData.running = false;
+			gameData.correctGuess = true;
 		}
 	else msgClient("Špatně, hrajete dál!");
 }
@@ -301,26 +309,21 @@ function gameEnded(data) {
 
 	var firstscore = parseInt(document.getElementById("firstScore").innerHTML);
 	var secondscore =  parseInt(document.getElementById("secondScore").innerHTML);
-console.log(firstscore + ", " + secondscore);
-
-	if (data == "guess") {
+	console.log(firstscore + ", " + secondscore);
+	
+	var myScore = gameData.iStartedTheGame ? firstscore : secondscore;
+	var oppScore = gameData.iStartedTheGame ? secondscore : firstscore;
+	
+	document.getElementById('game').className += ' gameended';
+	if(myScore > oppScore){
 		msgClient("Výhra!");
-		document.getElementById('game').className += ' gameended';
-		if (firstscore > secondscore) {
-			document.getElementById('scoretable').className += ' win';
-		} else {
-			document.getElementById('scoretable').className += ' draft';
-		}
-		//design magic
-	} else if (data == "ended") {
-		msgClient("Hra byla ukončena.");
-		document.getElementById('game').className += ' gameended';
-		if (firstscore < secondscore) {
-			document.getElementById('scoretable').className += ' lose';
-		} else {
-			document.getElementById('scoretable').className += ' draft';
-		}
-		//includes opponent victory / game connection failure
+		document.getElementById('scoretable').className += ' win';
+	} else if (myScore < oppScore) {
+		msgClient("Prohra!");
+		document.getElementById('scoretable').className += ' lose';
+	} else {
+		msgClient("Remíza!");
+		document.getElementById('scoretable').className += ' draft';
 	}
 
 	for (var y = 0; y < gameData.image.y; y++) {
