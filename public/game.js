@@ -195,18 +195,19 @@ function gameCheck() {
 }
 
 function updateGameState(data) {
-	if (data.state != "active") {
+
+	document.getElementById("firstScore").innerHTML = data.player1score;
+	document.getElementById("secondScore").innerHTML = data.player2score;
+
+	if (data.state != "active" && gameData.running) {
 		msgClient("Hra byla ukončena");
 		gameData.running = false;
 		gameEnded("ended");
 	} else {
-		document.getElementById("firstScore").innerHTML = data.player1score;
-		document.getElementById("secondScore").innerHTML = data.player2score;
-	}
-
-	for (var y = 0; y < gameData.image.y; y++) {
-		for (var x = 0; x < gameData.image.x; x++) {
-			if (data.uncovered[y][x]) uncover(x, y);
+		for (var y = 0; y < gameData.image.y; y++) {
+			for (var x = 0; x < gameData.image.x; x++) {
+				if (data.uncovered[y][x]) uncover(x, y);
+			}
 		}
 	}
 }
@@ -286,15 +287,21 @@ function guessImage() {
 }
 
 function handleGuess(data) {
-	if (data.correct) gameEnded("guess");
+	if (data.correct) 
+		{
+			gameEnded("guess");
+			gameData.running = false;
+		}
 	else msgClient("Špatně, hrajete dál!");
 }
 
 function gameEnded(data) {
 	if(gameData.timeInterval) clearInterval(gameData.timeInterval);
 	//for future use, do design changes
-	var firstscore = document.getElementById("firstScore").innerHTML;
-	var secondscore = document.getElementById("secondScore").innerHTML;
+
+	var firstscore = parseInt(document.getElementById("firstScore").innerHTML);
+	var secondscore =  parseInt(document.getElementById("secondScore").innerHTML);
+console.log(firstscore + ", " + secondscore);
 
 	if (data == "guess") {
 		msgClient("Výhra!");
@@ -326,7 +333,6 @@ function gameEnded(data) {
 	while (list.firstChild) {
 		list.removeChild(list.firstChild);
 	}
-	document.getElementById("question").remove();
 }
 
 socket.onopen = function (event) {
