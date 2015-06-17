@@ -9,9 +9,27 @@ var gameData = {
 	timestamp: null,
 	canPick: false,
 	gameId: -1,
+	waitCount: 0,
 	answerid: 0
 }
 window.questionCount = 1;
+
+var connectionTest = setInterval(function(){ checkConnection() }, 500);
+
+function checkConnection()
+{
+	//feature request, do design magic here
+	if(!gameData.initialized)
+	{
+		gameData.waitCount++;
+		if(gameData.waitCount > 40) 
+		{
+			msgClient("Připojení se nezdařilo");
+			socket.close();
+			clearInterval(connectionTest);
+		}
+	} else clearInterval(connectionTest);
+}
 
 function image(url, width, height, options, x, y)
 {
@@ -81,6 +99,7 @@ function gameStarted(data)
 
 function questionAsked(data)
 {
+	gameData.timestamp = data.timestamp;
 	document.getElementById("question").innerHTML = "<span>Otázka " + window.questionCount + ":</span> " + data.text;
 	var list = document.getElementById("answerList");
 	list.className = "answers";
@@ -174,7 +193,7 @@ function gameCheck()
 
 function updateGameState(data)
 {
-	if(data.state != "active") { msgClient("Hra byla ukončena"); gameData.running = false; } 
+	if(data.state != "active") { msgClient("Hra byla ukončena"); gameData.running = false; gameEnded("ended");} 
 	else
 	{
 		document.getElementById("firstScore").innerHTML = data.player1score;
@@ -271,7 +290,39 @@ function guessImage()
 
 function handleGuess(data)
 {
-	if(data.correct) msgClient("Výhra!"); else msgClient("Špatně, hrajete dál!");
+	if(data.correct) gameEnded("guess"); else msgClient("Špatně, hrajete dál!");
+}
+
+function gameEnded(data)
+{
+
+	//for future use, do design changes
+	if(data == "guess") 
+	{
+		msgClient("Výhra!");
+		//correct guess by player
+		//design magic
+	}
+	else if(data == "ended") 
+	{
+		msgClient("Hra byla ukončena.");
+		//includes opponent victory / game connection failure
+		//design magic
+	}
+
+	for(var y = 0; y < gameData.image.y; y++)
+	{
+		for(var x = 0; x < gameData.image.x; x++)
+		{
+			uncover(x, y);
+		}
+	}
+
+	var list = document.getElementById("answerList");
+	while (list.firstChild) {
+		list.removeChild(list.firstChild);
+	}
+	document.getElementById("question").remove();	
 }
 
 socket.onopen = function (event) {
