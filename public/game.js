@@ -95,7 +95,7 @@ function gameStarted(data) {
 }
 
 function setTimeLeft(time) {
-	$("#time").text((time / 1000).toFixed(0));
+	document.getElementById("time").innerText = (time / 1000).toFixed(0);
 }
 
 function timeTick() {
@@ -286,6 +286,7 @@ function handleGuess(data) {
 }
 
 function gameEnded(data) {
+	if(gameData.timeInterval) clearInterval(gameData.timeInterval);
 	//for future use, do design changes
 	var firstscore = document.getElementById("firstScore").innerHTML;
 	var secondscore = document.getElementById("secondScore").innerHTML;
