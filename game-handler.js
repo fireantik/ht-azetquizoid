@@ -282,7 +282,12 @@ Game.prototype.questionEnded = function () {
 	this.wsSend(this.client1, helpers.message("answer-report", c1report));
 	this.wsSend(this.client2, helpers.message("answer-report", c2report));
 
-	if (!c1correct && !c2correct) this.donePicking();
+	if (!c1correct && !c2correct) {
+		var a = this;
+		setTimeout(function(){
+			if(a.state != "closed") a.donePicking.call(a);
+		}, 3000);
+	}
 }
 
 Game.prototype.donePicking = function () {

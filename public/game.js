@@ -132,6 +132,7 @@ function questionAsked(data) {
 }
 
 function validateAnswer(text) {
+	if(gameData.timeInterval) clearInterval(gameData.timeInterval);
 	var params = {
 		text: text
 	}
