@@ -10,7 +10,7 @@ var first_answer_score = 5;
 var correct_guess_score = 20;
 var wrong_guess_score = -10;
 
-var question_time = 60000;
+var question_time = 30000;
 
 function Game(ws, closeCallback) {
 	this.closeCallback = closeCallback;
@@ -220,8 +220,8 @@ Game.prototype.uncoverCell = function (x, y) {
 
 Game.prototype.pickRandomCell = function () {
 	while (true) {
-		var x = Math.floor(Math.random() * this.size.x);
-		var y = Math.floor(Math.random() * this.size.y);
+		var x = getRandomInt(0, this.size.x);
+		var y = getRandomInt(0, this.size.y);
 
 		if (this.uncovered[y][x]) continue;
 
@@ -343,6 +343,10 @@ function getRandomOptions(count, included) {
 	sliced.push(included);
 	opts = shuffle(sliced);
 	return sliced;
+}
+
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function bootstrap() {
