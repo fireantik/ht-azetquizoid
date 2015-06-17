@@ -210,7 +210,7 @@ p{
 	cursor: default;
 }
 .picture .overlay .erased{
-	animation: fly-out-front .5s ease-in-out forwards;
+	animation: fly-out-front 1s ease-in-out forwards;
 	color: transparent;
 }
 .picture img{
@@ -542,14 +542,22 @@ ul.answers.selected.pick + #pick{
 }
 
 @keyframes fly-out-front {
-  to {
+  50% {
     transform: scale(2) rotate(110deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
     opacity: 0;
   }
 }
 @-webkit-keyframes fly-out-front {
-  to {
+  50% {
     transform: scale(2) rotate(110deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
     opacity: 0;
   }
 }
