@@ -1,3 +1,9 @@
+var templates = require('./equation_templates.json');
+
+String.prototype.replaceAt = function (index, character) {
+	return this.substr(0, index) + character + this.substr(index + 1);
+}
+
 function shuffle(array) {
 	var counter = array.length,
 		temp, index;
@@ -19,6 +25,10 @@ function shuffle(array) {
 	return array;
 }
 
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 function generateNum(from, to, excluding) {
 	while (true) {
 		var num = Math.round(Math.random() * (to - from) + from);
@@ -26,20 +36,9 @@ function generateNum(from, to, excluding) {
 	}
 }
 
-function simpleEquationGenerator() {
-	var vysledek = 1000;
-	var a = 0;
-	var b = 0;
-	var znameko = "+";
-
-	while (vysledek > 100 || vysledek < 0 || vysledek % 1 != 0) {
-		a = Math.round(Math.random() * 100 + 1);
-		b = Math.round(Math.random() * 100 + 1);
-		znamenko = Math.random() > 0.5 ? "+" : "-";
-
-		vysledek = eval(a + znameko + b);
-	}
-
+function makeOptions(eq) {
+	console.log(eq);
+	var vysledek = eval(eq);
 	var options = [vysledek];
 	var from = vysledek - 5;
 	var to = vysledek + 5;
@@ -49,14 +48,50 @@ function simpleEquationGenerator() {
 	options = shuffle(options);
 
 	return {
-		question: a + " " + znameko + " " + b + " = ?",
+		question: eq + " = ?",
 		options: options,
 		answer: vysledek
 	}
 }
 
+function templatedEquationGenerator() {
+	var template;
+	var vysledek = 0.465465434;
+	while (vysledek % 0.5 != 0 || vysledek < -100 || vysledek > 100) {
+		template = templates[getRandomInt(0, templates.length - 1)];
+		while (true) {
+			var index = template.indexOf('$');
+			if (index == -1) break;
+
+			var num = getRandomInt(2, 30);
+			template = template.replaceAt(index, num);
+		}
+
+		vysledek = eval(template);
+	}
+	console.log("out", template, vysledek);
+	return makeOptions(template);
+}
+
+function simpleEquationGenerator() {
+	var vysledek = 1000;
+	var a = 0;
+	var b = 0;
+	var znameko = "+";
+
+	while (vysledek > 100 || vysledek % 1 != 0) {
+		a = Math.round(Math.random() * 100 + 1);
+		b = Math.round(Math.random() * 100 + 1);
+		znamenko = Math.random() > 0.5 ? "+" : "-";
+
+		vysledek = eval(a + znameko + b);
+	}
+
+	return makeOptions(a + " " + znameko + " " + b);
+}
+
 var generators = [
-	simpleEquationGenerator
+	templatedEquationGenerator
 ];
 
 module.exports = function () {
