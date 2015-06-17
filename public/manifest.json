@@ -1,0 +1,13 @@
+{
+  "short_name": "Quizoid",
+  "name": "Quizoid",
+  "icons": [
+    {
+      "src": "img/icon-highres.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "index.html",
+  "display": "standalone"
+}
