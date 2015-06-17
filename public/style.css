@@ -168,6 +168,12 @@ p{
 	width: calc(100% - 20px);
 	height: calc(100% - 20px);
 	z-index: 5;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 .picture .overlay div{
 	float: left;

@@ -1,4 +1,4 @@
-var socket = new WebSocket("ws://azetquizoid.azurewebsites.net/game");
+var socket = new WebSocket("wss://azetquizoid.azurewebsites.net/game");
 
 var gameData = {
 	initialized: false,
