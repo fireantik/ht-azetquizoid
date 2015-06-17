@@ -66,7 +66,7 @@ function createGame() {
 
 function msgClient(data) {
 	console.log(data);
-	document.getElementById("notifyBar").innerHTML = data;
+	//document.getElementById("notifyBar").innerHTML = data;
 }
 
 function gameCreated(data) {
