@@ -25,6 +25,7 @@ function checkConnection()
 		if(gameData.waitCount > 40) 
 		{
 			msgClient("Připojení se nezdařilo");
+			document.getElementsByTagName('BODY')[0].className='connectionerror';
 			socket.close();
 			clearInterval(connectionTest);
 		}
@@ -63,6 +64,7 @@ function createGame()
 	{
 		send("create", {});
 		gameData.waiting = true;
+		document.getElementById("url").className = "established";
 	}
 }
 
@@ -295,19 +297,33 @@ function handleGuess(data)
 
 function gameEnded(data)
 {
-
 	//for future use, do design changes
+	var firstscore = document.getElementById("firstScore").innerHTML;
+	var secondscore = document.getElementById("secondScore").innerHTML;
+
 	if(data == "guess") 
 	{
 		msgClient("Výhra!");
-		//correct guess by player
+		document.getElementById('game').className += ' gameended';
+		if(firstscore > secondscore) {
+			document.getElementById('scoretable').className += ' win';
+		}
+		else{
+			document.getElementById('scoretable').className += ' draft';
+		}
 		//design magic
 	}
 	else if(data == "ended") 
 	{
 		msgClient("Hra byla ukončena.");
+		document.getElementById('game').className += ' gameended';
+		if(firstscore < secondscore) {
+			document.getElementById('scoretable').className += ' lose';
+		}
+		else{
+			document.getElementById('scoretable').className += ' draft';
+		}
 		//includes opponent victory / game connection failure
-		//design magic
 	}
 
 	for(var y = 0; y < gameData.image.y; y++)
@@ -348,3 +364,4 @@ socket.onmessage = function (event) {
 		}
 
 }
+

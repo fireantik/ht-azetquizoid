@@ -32,7 +32,6 @@ body{
 	padding: 0 20px;
 	margin: 0 auto;
 }
-
 header{
 	height: 320px;
 	width: 100%;
@@ -52,10 +51,28 @@ header h1{
 }
 header form{
 	margin: 50px auto;
-	height: 300px;
 	text-align: center;
 	text-transform: uppercase;
 	font-size: 90%;
+}
+.connectionerror header form{
+	animation: fly-out-to-top 1.2s forwards;
+}
+.cloud-off{
+	text-align: center;
+	display: none;
+	margin-top: -210px;
+}
+.cloud-off h3{
+	padding-bottom: 5px;
+}
+.cloud-off svg{
+	width: 140px;
+	margin: 0 auto;
+}
+.connectionerror .cloud-off{
+	animation: connection-fly 1s .8s ease-in-out backwards;
+	display: block;
 }
 header input[type="text"]{
 	width: 300px;
@@ -68,7 +85,6 @@ header input[type="text"]{
 	border-bottom: 2px solid white;
 	background-color: rgba(255,255,255,0.7);
 }
-
 section{
 	padding-top: 50px;
 }
@@ -304,6 +320,9 @@ ul.answers.selected.pick + #pick{
 .gameended .scoretable.lose{
 	background: #F44336;
 }
+.gameended .scoretable.draft{
+	background: #FDD835;
+}
 .gameended .scoretable:before{
 	width: 100%;
 	position: absolute;
@@ -319,6 +338,9 @@ ul.answers.selected.pick + #pick{
 }
 .gameended .scoretable.lose:before{
 	content: "Prohra";
+}
+.gameended .scoretable.draft:before{
+	content: "Remíza";
 }
 
 #question span{
@@ -371,6 +393,19 @@ ul.answers.selected.pick + #pick{
   }
 }
 
+@keyframes fly-out-to-top {
+  to {
+    transform: translateY(-100px);
+    opacity:0;
+  }
+}
+@-webkit-keyframes fly-out-to-top {
+  to {
+    transform: translateY(-100px);
+    opacity:0;
+  }
+}
+
 @keyframes fly-in-from-bottom {
   from {
     transform:translateY(200px);
@@ -380,6 +415,19 @@ ul.answers.selected.pick + #pick{
 @-webkit-keyframes fly-in-from-bottom {
   from {
     transform:translateY(200px);
+    opacity:0;
+  }
+}
+
+@keyframes connection-fly {
+  from {
+    transform:translateY(200px) rotate(30deg);
+    opacity:0;
+  }
+}
+@-webkit-keyframes connection-fly {
+  from {
+    transform:translateY(200px) rotate(30deg);
     opacity:0;
   }
 }
