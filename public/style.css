@@ -29,8 +29,9 @@ body{
 }
 .wrapper{
 	max-width: 900px;
-	padding: 0 20px;
+	padding: 0 20px 20px;
 	margin: 0 auto;
+	overflow: auto;
 }
 header{
 	height: 320px;
@@ -408,6 +409,8 @@ ul.answers.selected.pick + #pick{
 	}
 	.game .form{
 		margin: -1px 10px 0 10px;
+		float: none;
+		margin: 0 auto;
 	}
 	.question{
 		padding-bottom: 5px;
