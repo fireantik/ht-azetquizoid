@@ -152,7 +152,7 @@ p{
 .ingame header{
 	height: 40px;
 	padding: 10px 0;
-	position: static;
+	position: fixed;
 }
 .ingame header h1{
 	font-size: 22px;
