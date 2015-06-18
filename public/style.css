@@ -79,7 +79,7 @@ header input[type="text"]{
 	width: 300px;
 	height: 20px;
 	margin: 20px 0;
-    line-height: 20px;
+	line-height: 20px;
 	padding: 10px 20px;
 	border: 0;
 	text-align: center;
@@ -91,9 +91,9 @@ section{
 }
 p{
 	padding: 10px 0 30px;
-    text-align: justify;
-    line-height: 1.55em;
-    font-size: 15px;
+	text-align: justify;
+	line-height: 1.55em;
+	font-size: 15px;
 }
 .main img{ 
 height: 130px;
@@ -203,11 +203,11 @@ margin: 20px 20px 0 0;
 	float: left;
 	background: #ddd;
 	color: #9A9A9A;
-    text-align: right;
-    font-size: 10px;
-    padding: 5px;
-    cursor: pointer;
-    transition: background .2s;
+	text-align: right;
+	font-size: 10px;
+	padding: 5px;
+	cursor: pointer;
+	transition: background .2s;
 }
 .picture .overlay div:hover{
 	background: #eee;
@@ -285,7 +285,7 @@ ul.answers li.op:after{
 	animation: slide-from-right .5s ease-out backwards;
 	right: 0;
 }
-    
+	
 
 
 
@@ -299,34 +299,34 @@ ul.answers.selected{
 	clear: both;
 	text-align: center;
 	width: 349px;
-    margin: -1px 11px 0 10px;
-    float: right;
-    background-color: #d4d4d4;
-    box-shadow: inset 0 8px 10px -10px rgba(0,0,0,0.5);
-    padding: 20px 0;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
+	margin: -1px 11px 0 10px;
+	float: right;
+	background-color: #d4d4d4;
+	box-shadow: inset 0 8px 10px -10px rgba(0,0,0,0.5);
+	padding: 20px 0;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
 }
 .game .form h3{
-    padding-bottom: 10px;
+	padding-bottom: 10px;
 }
 .game .form select{
 	padding: 2px 5px;
-    height: 30px;
-    border: 1px solid #bbb;
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
+	height: 30px;
+	border: 1px solid #bbb;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
 }
 .game .form button{
 	padding: 2px 5px;
-    height: 30px;
-    border: 1px solid #bbb;
-    color: white;
-    background: #2196F3;
-    margin-left: -5px;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    cursor: pointer;
+	height: 30px;
+	border: 1px solid #bbb;
+	color: white;
+	background: #2196F3;
+	margin-left: -5px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+	cursor: pointer;
 }
 #pick{
 	width: 100%;
@@ -415,12 +415,12 @@ button.newgame:hover{
 }
 .gameended .picture{
 	float: none;
-    margin: 0 auto;
+	margin: 0 auto;
 }
 .gameended .question{
 	margin: 0;
-    height: 0;
-    padding: 0;
+	height: 0;
+	padding: 0;
 }
 
 #question span{
@@ -462,8 +462,8 @@ button.newgame:hover{
 		height: 30px;
 	}
 	.ingame header h1 {
-	    font-size: 20px;
-	    line-height: 32px;
+		font-size: 20px;
+		line-height: 32px;
 	}
 	.game .scoretable{
 		height: 57px;
@@ -473,168 +473,168 @@ button.newgame:hover{
 		font-size: 80%;
 	}
 	.game .scoretable {
-    	margin-bottom: 20px;
-    }
-    ul.answers {
-    	margin-top: 10px;
-    }
-    ul.answers li {
-	    animation: answers-slide-left .4s cubic-bezier(0.44, 0, 0.49, 1.32) backwards !important;
+		margin-bottom: 20px;
+	}
+	ul.answers {
+		margin-top: 10px;
+	}
+	ul.answers li {
+		animation: answers-slide-left .4s cubic-bezier(0.44, 0, 0.49, 1.32) backwards !important;
 	}
 	.gameended .scoretable:before {
-    	bottom: 15px;
-    }
+		bottom: 15px;
+	}
 }
 @media  only screen and (max-width: 420px)  {
 	.wrapper{
 		padding: 0 10px;
 	}
 	header input[type="text"] {
-    	width: calc(100% - 40px);
-    }
-    .game .scoretable > div {
-	    font-size: 60%;
+		width: calc(100% - 40px);
+	}
+	.game .scoretable > div {
+		font-size: 60%;
 	}
 }
 
 @keyframes fly-out-to-bottom {
   to {
-    transform: translateY(100px);
-    opacity:0;
+	transform: translateY(100px);
+	opacity:0;
   }
 }
 @-webkit-keyframes fly-out-to-bottom {
   to {
-    transform: translateY(100px);
-    opacity:0;
+	transform: translateY(100px);
+	opacity:0;
   }
 }
 
 @keyframes fly-out-to-top {
   to {
-    transform: translateY(-100px);
-    opacity:0;
+	transform: translateY(-100px);
+	opacity:0;
   }
 }
 @-webkit-keyframes fly-out-to-top {
   to {
-    transform: translateY(-100px);
-    opacity:0;
+	transform: translateY(-100px);
+	opacity:0;
   }
 }
 
 @keyframes fly-in-from-bottom {
   from {
-    transform:translateY(200px);
-    opacity:0;
+	transform:translateY(200px);
+	opacity:0;
   }
 }
 @-webkit-keyframes fly-in-from-bottom {
   from {
-    transform:translateY(200px);
-    opacity:0;
+	transform:translateY(200px);
+	opacity:0;
   }
 }
 
 @keyframes connection-fly {
   from {
-    transform:translateY(200px) rotate(30deg);
-    opacity:0;
+	transform:translateY(200px) rotate(30deg);
+	opacity:0;
   }
 }
 @-webkit-keyframes connection-fly {
   from {
-    transform:translateY(200px) rotate(30deg);
-    opacity:0;
+	transform:translateY(200px) rotate(30deg);
+	opacity:0;
   }
 }
 
 @keyframes ripple {
   from {
-    transform:scale(0);
-    opacity:1;
+	transform:scale(0);
+	opacity:1;
   }
   to {
-    transform:scale(20);
-    opacity:0;
+	transform:scale(20);
+	opacity:0;
   }
 }
 @-webkit-keyframes ripple {
   from {
-    transform:scale(0);
-    opacity:1;
+	transform:scale(0);
+	opacity:1;
   }
   to {
-    transform:scale(20);
-    opacity:0;
+	transform:scale(20);
+	opacity:0;
   }
 }
 
 @keyframes slide-from-left {
   from {
-    transform: translateX(-12px);
+	transform: translateX(-12px);
   }
 }
 @-webkit-keyframes slide-from-left {
   from {
-    transform: translateX(-12px);
+	transform: translateX(-12px);
   }
 }
 
 @keyframes answers-slide-left {
   from {
-    transform: translateX(-40px);
-    opacity: 0;
+	transform: translateX(-40px);
+	opacity: 0;
   }
 }
 @-webkit-keyframes answers-slide-left {
   from {
-    transform: translateX(-40px);
-    opacity: 0;
+	transform: translateX(-40px);
+	opacity: 0;
   }
 }
 
 @keyframes answers-slide-right {
   from {
-    transform: translateX(40px);
-    opacity: 0;
+	transform: translateX(40px);
+	opacity: 0;
   }
 }
 @-webkit-keyframes answers-slide-right {
   from {
-    transform: translateX(40px);
-    opacity: 0;
+	transform: translateX(40px);
+	opacity: 0;
   }
 }
 
 @keyframes slide-from-right {
   from {
-    transform: translateX(12px);
+	transform: translateX(12px);
   }
 }
 @-webkit-keyframes slide-from-right {
   from {
-    transform: translateX(12px);
+	transform: translateX(12px);
   }
 }
 
 @keyframes fly-out-front {
   50% {
-    transform: scale(2) rotate(110deg);
-    opacity: 0;
+	transform: scale(2) rotate(110deg);
+	opacity: 0;
   }
   100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 0;
+	transform: scale(1) rotate(0deg);
+	opacity: 0;
   }
 }
 @-webkit-keyframes fly-out-front {
   50% {
-    transform: scale(2) rotate(110deg);
-    opacity: 0;
+	transform: scale(2) rotate(110deg);
+	opacity: 0;
   }
   100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 0;
+	transform: scale(1) rotate(0deg);
+	opacity: 0;
   }
 }
