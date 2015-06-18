@@ -392,6 +392,31 @@ ul.answers.selected.pick + #pick{
 .gameended .scoretable.draft:before{
 	content: "Remíza";
 }
+button.newgame{
+	background-color: #2196F3;
+	color: white;
+	padding: 15px 30px;
+	font-size: 16px;
+	border: 0;
+	border-radius: 3px;
+	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	margin: 20px auto;
+	width: 190px;
+	display: none;
+	cursor: pointer;
+	transition: background-color .2s;
+}
+button.newgame:hover{
+	background-color: #64B5F6; 
+}
+.gameended button.newgame{
+	display: block;
+	animation: fly-in-from-bottom .4s ease-in-out backwards;
+}
+.gameended .picture{
+	float: none;
+    margin: 0 auto;
+}
 
 #question span{
 	font-weight: normal;
@@ -451,6 +476,9 @@ ul.answers.selected.pick + #pick{
     ul.answers li {
 	    animation: answers-slide-left .4s cubic-bezier(0.44, 0, 0.49, 1.32) backwards !important;
 	}
+	.gameended .scoretable:before {
+    	bottom: 15px;
+    }
 }
 @media  only screen and (max-width: 420px)  {
 	.wrapper{
@@ -459,6 +487,9 @@ ul.answers.selected.pick + #pick{
 	header input[type="text"] {
     	width: calc(100% - 40px);
     }
+    .game .scoretable > div {
+	    font-size: 60%;
+	}
 }
 
 @keyframes fly-out-to-bottom {

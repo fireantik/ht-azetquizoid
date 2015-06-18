@@ -36,9 +36,9 @@
 		<section class="main" id="main">
 			<div class="wrapper">
 				<h2>O projektu</h2>
-				<p>Projekt Quizoid je webová hra na způsob kvízu určená pro dva hráče, která se snaží zábavnou formou testovat a rozvíjet znalosti z různých odvětví vědy. Přestože otázky nyní testují bystrost pouze jednoduchými matematickými rovnicemi, lze aplikaci doplnit sadou jakýchkoliv otázek a odpovědí. Hru lze hrát na jakémkoliv zařízení s webovým prohlížečem a přístupem k internetu. Celá aplikace běží na cloudové výpočetní platformě Microsoft Azure a je naprogramovaná v Node.js a HTML5. Komunikace se serverem je řešena pomocí websockets.</p>
+				<p>Projekt Quizoid je webová hra na způsob kvízu určená pro dva hráče, která se snaží zábavnou formou testovat a rozvíjet znalosti z různých odvětví vědy. Přestože otázky nyní testují bystrost pouze jednoduchými matematickými rovnicemi, lze aplikaci doplnit sadou jakýchkoliv otázek a odpovědí. Hru lze hrát na jakémkoliv zařízení s webovým prohlížečem a přístupem k internetu. Celá aplikace běží na cloudové výpočetní platformě Microsoft Azure a je naprogramovaná v Node.js a HTML5. Komunikace se serverem je řešena pomocí technologie websockets.</p>
 				<h2>Jak hrát</h2>
-				<p>Nejprve zkopírujte odkaz vygenerovaný v horní části této stránky a pošlete jej svému kamarádovi, se kterým se chcete utkat. Jakmile váš kamarád na tento odkaz klikne, hra okamžitě začne a oběma hráčům se objeví první otázka. Každá otázka má 4 odpovědi, z nichž pouze jediná je správná. Po odpovězení má první hráč, který vybral správnou odpověď, možnost odkrýt jedno pole ze zakrytého obrázku napravo od otázky. Pokud oba odpověděli špatně, vybere pole náhodně server. Následuje jedna otázka za druhou a jakmile si jeden z hráčů myslí, že už ví, co se nachází na zakrytém obrázku, může zkusit vybrat možnost z nabídnutéhos seznamu. Pokud se trefí, hra končí, hráč dostává bonusové body a vyhrává ten, který má vyšší skóre. Pokud se však netrefí, ztrácí naopak body a hra pokračuje dál.</p>
+				<p>Nejprve zkopírujte odkaz vygenerovaný v horní části této stránky a pošlete jej svému kamarádovi, se kterým se chcete utkat. Jakmile váš kamarád na tento odkaz klikne, hra okamžitě začne a oběma hráčům se objeví první otázka. Každá otázka má 4 odpovědi, z nichž pouze jediná je správná. Po odpovězení má první hráč, který vybral správnou odpověď, možnost odkrýt jedno pole ze zakrytého obrázku napravo od otázky. Pokud oba odpověděli špatně, vybere pole náhodně server. Následuje jedna otázka za druhou a jakmile si jeden z hráčů myslí, že už ví, co se nachází na zakrytém obrázku, může zkusit vybrat možnost z nabídnutého seznamu. Pokud se trefí, hra končí, hráč dostává bonusové body a vyhrává ten, který má vyšší skóre. Pokud se však netrefí, ztrácí naopak body a hra pokračuje dál.</p>
 				<h2>Autoři</h2>
 				<p>Autory projektu jsou Karel Douda, Jan Kelin a Jakub Topič, studenti třetího ročníku SPŠE V Úžlabině 320, Praha 10.</p>
 				<h2>Použité technologie</h2>
@@ -80,6 +80,7 @@
 						<div id="answer"></div>
 					</div>
 				</div>
+				<button class="newgame" onclick="location.reload()">Zahájit novou hru</button>
 			</div>
 		</section>
 		<script src="game.js"></script>
