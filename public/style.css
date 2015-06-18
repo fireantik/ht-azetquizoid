@@ -417,6 +417,11 @@ button.newgame:hover{
 	float: none;
     margin: 0 auto;
 }
+.gameended .question{
+	margin: 0;
+    height: 0;
+    padding: 0;
+}
 
 #question span{
 	font-weight: normal;
