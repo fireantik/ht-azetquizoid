@@ -35,12 +35,15 @@
 		</header>
 		<section class="main" id="main">
 			<div class="wrapper">
-				<h2>Jak hrát</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas posuere enim eu risus hendrerit, volutpat malesuada urna condimentum. Maecenas a est volutpat dolor rhoncus rutrum. Sed cursus ex et nunc tempus mollis. Nullam varius mollis tincidunt. Aenean est urna, venenatis nec ex molestie, pharetra luctus turpis. Ut suscipit ipsum sit amet suscipit fermentum. Pellentesque accumsan nec ante quis tristique. Vestibulum rhoncus luctus sapien, ac egestas velit viverra id. Donec non odio eu tellus bibendum dictum a ut arcu. Nunc sit amet elit non lorem gravida hendrerit sed id felis.</p>
 				<h2>O projektu</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas posuere enim eu risus hendrerit, volutpat malesuada urna condimentum. Maecenas a est volutpat dolor rhoncus rutrum. Sed cursus ex et nunc tempus mollis. Nullam varius mollis tincidunt. Aenean est urna, venenatis nec ex molestie, pharetra luctus turpis. Ut suscipit ipsum sit amet suscipit fermentum. Pellentesque accumsan nec ante quis tristique. Vestibulum rhoncus luctus sapien, ac egestas velit viverra id. Donec non odio eu tellus bibendum dictum a ut arcu. Nunc sit amet elit non lorem gravida hendrerit sed id felis.</p>
+				<p>Projekt Quizoid je webová hra na způsob kvízu určená pro dva hráče, která se snaží zábavnou formou testovat a rozvíjet znalosti z různých odvětví vědy. Přestože otázky nyní testují bystrost pouze jednoduchými matematickými rovnicemi, lze aplikaci doplnit sadou jakýchkoliv otázek a odpovědí. Hru lze hrát na jakémkoliv zařízení s webovým prohlížečem a přístupem k internetu. Celá aplikace běží na cloudové výpočetní platformě Microsoft Azure a je naprogramovaná v Node.js a HTML5. Komunikace se serverem je řešena pomocí websockets.</p>
+				<h2>Jak hrát</h2>
+				<p>Nejprve zkopírujte odkaz vygenerovaný v horní části této stránky a pošlete jej svému kamarádovi, se kterým se chcete utkat. Jakmile váš kamarád na tento odkaz klikne, hra okamžitě začne a oběma hráčům se objeví první otázka. Každá otázka má 4 odpovědi, z nichž pouze jediná je správná. Po odpovězení má první hráč, který vybral správnou odpověď, možnost odkrýt jedno pole ze zakrytého obrázku napravo od otázky. Pokud oba odpověděli špatně, vybere pole náhodně server. Následuje jedna otázka za druhou a jakmile si jeden z hráčů myslí, že už ví, co se nachází na zakrytém obrázku, může zkusit vybrat možnost z nabídnutéhos seznamu. Pokud se trefí, hra končí, hráč dostává bonusové body a vyhrává ten, který má vyšší skóre. Pokud se však netrefí, ztrácí naopak body a hra pokračuje dál.</p>
 				<h2>Autoři</h2>
-				<!--<button onclick="document.getElementsByTagName('BODY')[0].className='ingame'">Test: Simulovat hru</button>-->
+				<p>Autory projektu jsou Karel Douda, Jan Kelin a Jakub Topič, studenti třetího ročníku SPŠE V Úžlabině 320, Praha 10.</p>
+				<h2>Použité technologie</h2>
+				<p><img src="img/logo-azure.png" alt="Microsoft Azure"><img src="img/logo-nodejs.png" alt="Node.js"><img src="img/logo-html5.png" alt="HTML5"></p>
+				<p style="color:#999;padding: 5px 0 10px">Copyright 2015</p>
 			</div>
 		</section>
 		<section class="game" id="game">
@@ -60,12 +63,8 @@
 				<div class="wrapper">
 					<div class="qwrapper">
 						<div class="question">
-							<h3 id="question">Otázka 3: Lorem ipsum dolor sit amet?</h3>
+							<h3 id="question"></h3>
 							<ul class="answers" id="answerList">
-								<li>42</li>
-								<li class="selected">Selected</li>
-								<li class="wrong op">Wrong</li>
-								<li class="correct my">Correct</li>
 							</ul>
 							<div id="pick">Vyberte pole z obrázku napravo</div>
 						</div>
@@ -80,12 +79,9 @@
 						<button onclick="guessImage()">Potvrdit</button>
 						<div id="answer"></div>
 					</div>
-					<!--<button onclick="document.getElementById('game').className += ' gameended';document.getElementById('scoretable').className += ' win'">Test: Simulovat konec hry - Výhra</button>
-					<button onclick="document.getElementById('game').className += ' gameended';document.getElementById('scoretable').className += ' lose'">Test: Simulovat konec hry - Prohra</button>-->
 				</div>
 			</div>
 		</section>
-		<!--<div id="notifyBar"></div>-->
 		<script src="game.js"></script>
 	</body>
 </html>

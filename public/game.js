@@ -86,10 +86,11 @@ function gameStarted(data) {
 	gameData.waiting = false;
 	gameData.running = true;
 	gameData.image = new image(data.img_url, data.img_width, data.img_height, data.options, data.size.x, data.size.y);
-	document.getElementsByTagName('BODY')[0].className = 'ingame';
+	document.getElementsByTagName('body')[0].className = 'ingame';
 	setTimeout(function () {
-		document.getElementById("main").style.display = "none"
-	}, 1000);
+		document.getElementById("main").style.display = "none";
+		document.getElementsByTagName('header')[0].style.position = 'fixed';
+	}, 2000);
 	var img = document.createElement("img");
 	img.src = gameData.image.url;
 	document.getElementById("imageContainer").appendChild(img);
@@ -164,7 +165,10 @@ function checkAnswer(data) {
 		msgClient("Správná odpověď");
 	} else {
 		msgClient("Špatně!!!!");
-		answer.className += " wrong";
+		if(answer)
+		{
+			answer.className += " wrong";
+		}
 	}
 	answer.className += " my";
 	if (data.pick) {
