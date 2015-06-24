@@ -19,7 +19,7 @@ files.forEach(function (file) {
 	console.log(name);
 	var contents = require(__dirname + '/in/' + file);
 
-	if (name != "kočka") return; //TODO remove this line in production!!!
+	//if (name != "kočka") return; //TODO remove this line in production!!!
 	contents.forEach(function (item) {
 		module.exports.items.push({
 			name: name,
